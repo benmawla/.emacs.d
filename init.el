@@ -26,7 +26,7 @@
  '(custom-safe-themes
    '("73a183da135380d11ea344ccfe4e78dfe0a6ddcf09f59f050d373f7b4c397c19" "6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" "a55c6f55eacfa36389dffc8672420b80454db33b59843a1923f3e3054a4643ca" "fb3f55ac1ca4d5ba0d35b5507e28fa392b59e796a40d25497b23fd857892f74d" "2e59c24f4daea67be42e30f1e9b40b3169708c5dc97c55e94347380be783499b" "33cd1d4d57fdad620c7578ddf7372acb9a7ea106903c152b06781f8554b8e4c9" "88550f210943832ace0ab1655c541f3912ceaab30e83843682d623c6808502ad" "d97092d4087a2a1455121ad6ff299130083853ba3c4c6b325685a59d68f8e596" "23fc3954a54fd384904994b6b4088f73b57bd9e75b12a1c965306915da8c242a" "5d7bf3ce124535c2415b69c7e017a6258150a11cdfc3029b53310ff50e794967" default))
  '(package-selected-packages
-   '(counsel ivy evil-collection linum-relative avy magit ox-hugo ef-themes evil rust-mode tree-sitter-langs tree-sitter use-package eglot)))
+   '(which-key counsel ivy evil-collection linum-relative avy magit ox-hugo ef-themes evil rust-mode tree-sitter-langs tree-sitter use-package eglot)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -131,12 +131,13 @@
         "https://hnrss.org/frontpage"))
 
 (setq org-capture-templates
-      '(("t" "Subin Task" entry (file+headline "~/org/subin.org" "Tasks")
+      '(("t" "Subin Task" entry (file+headline "~/Developer/subinlaw.com/subin.org" "Tasks")
          "* TODO %?\n  %i\n  %a")))
 
 (global-set-key (kbd "C-x w") 'elfeed)
 
-(global-set-key (kbd "C-x n s") (lambda () (interactive) (find-file "~/org/subin.org")))
+(global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
+(global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
 
-(global-set-key (kbd "M-n") (lambda () (interactive) (next-line 10)))
-(global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 10)))
+(require 'which-key)
+(which-key-mode)
