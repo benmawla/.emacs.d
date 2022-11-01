@@ -138,3 +138,5 @@
 
 (global-set-key (kbd "C-x n s") (lambda () (interactive) (find-file "~/org/subin.org")))
 
+(global-set-key (kbd "M-n") (lambda () (interactive) (next-line 10)))
+(global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 10)))
