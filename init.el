@@ -1,3 +1,6 @@
+;; This init file is documented in full at:
+;; https://ben-maclaurin.github.io/post/init-el-file/
+
 ;; These lines initialise the package archives.
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
@@ -24,7 +27,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("7343e856679eef5ad722f026037c92e5c60fc9eed6f38ef86b4170b3e524fee3" "05b767a3f3a37ac46353fd88f194934d82eb6c3644c3b8da883752f57513e7aa" "73a183da135380d11ea344ccfe4e78dfe0a6ddcf09f59f050d373f7b4c397c19" "6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" "a55c6f55eacfa36389dffc8672420b80454db33b59843a1923f3e3054a4643ca" "fb3f55ac1ca4d5ba0d35b5507e28fa392b59e796a40d25497b23fd857892f74d" "2e59c24f4daea67be42e30f1e9b40b3169708c5dc97c55e94347380be783499b" "33cd1d4d57fdad620c7578ddf7372acb9a7ea106903c152b06781f8554b8e4c9" "88550f210943832ace0ab1655c541f3912ceaab30e83843682d623c6808502ad" "d97092d4087a2a1455121ad6ff299130083853ba3c4c6b325685a59d68f8e596" "23fc3954a54fd384904994b6b4088f73b57bd9e75b12a1c965306915da8c242a" "5d7bf3ce124535c2415b69c7e017a6258150a11cdfc3029b53310ff50e794967" default))
+   '("3c93094d214c034a89ed81a4bba720a23b090f38f7923a442c879c2bd4dcce5b" "7343e856679eef5ad722f026037c92e5c60fc9eed6f38ef86b4170b3e524fee3" "05b767a3f3a37ac46353fd88f194934d82eb6c3644c3b8da883752f57513e7aa" "73a183da135380d11ea344ccfe4e78dfe0a6ddcf09f59f050d373f7b4c397c19" "6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" "a55c6f55eacfa36389dffc8672420b80454db33b59843a1923f3e3054a4643ca" "fb3f55ac1ca4d5ba0d35b5507e28fa392b59e796a40d25497b23fd857892f74d" "2e59c24f4daea67be42e30f1e9b40b3169708c5dc97c55e94347380be783499b" "33cd1d4d57fdad620c7578ddf7372acb9a7ea106903c152b06781f8554b8e4c9" "88550f210943832ace0ab1655c541f3912ceaab30e83843682d623c6808502ad" "d97092d4087a2a1455121ad6ff299130083853ba3c4c6b325685a59d68f8e596" "23fc3954a54fd384904994b6b4088f73b57bd9e75b12a1c965306915da8c242a" "5d7bf3ce124535c2415b69c7e017a6258150a11cdfc3029b53310ff50e794967" default))
  '(org-agenda-files '("~/org/task.org"))
  '(package-selected-packages
    '(ef-themes elfeed which-key counsel ivy evil-collection linum-relative avy magit ox-hugo evil rust-mode tree-sitter-langs tree-sitter use-package eglot)))
@@ -35,10 +38,12 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; Enables ~tree-sitter-mode~ globally. Treesitter is an incremental parsing library. 
+;; Enables ~tree-sitter-mode~ globally. Treesitter is an incremental
+;; parsing library.
 (global-tree-sitter-mode)
 
-;; Instantiates a major mode for the [[https://www.rust-lang.org/][Rust programming language]]. 
+;; Instantiates a major mode for the
+;; [[https://www.rust-lang.org/][Rust programming language]].
 (require 'rust-mode)
 
 ;; This line maps ~C-u~ to ~PageUp~ in evil mode:
@@ -48,55 +53,63 @@
 (require 'evil)
 (evil-mode 0)
 
-;; I use the key-chord package to remap ~jk~ key presses in quick succession to escape:
+;; I use the key-chord package to remap ~jk~ key presses in quick
+;; succession to escape:
 (setq key-chord-two-keys-delay 0.3)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 (key-chord-mode 1)
 
-;; I use the accessible ~ef-themes~ collection by [[https://protesilaos.com/][Protesilaos Stavrou]]. 
+;; I use the accessible ~ef-themes~ collection by
+;; [[https://protesilaos.com/][Protesilaos Stavrou]].
 (load-theme 'ef-light)
 
-;; The following line remaps the Emacs meta <M> modifier to the slightly more erognomic macOS command key.
+;; The following line remaps the Emacs meta <M> modifier to the
+;; slightly more erognomic macOS command key.
 (setq mac-command-modifier 'meta)
 
 ;; This line sets the editor font size and face.
 (set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
 
-;; ~ox-hugo~ provides a convenient way to export `.org` files to Hugo-compatible markdown. It is used in the generation of [[https://ben-maclaurin.github.io/][my personal blog]].
+;; ~ox-hugo~ provides a convenient way to export `.org` files to
+;; Hugo-compatible markdown. It is used in the generation of
+;; [[https://ben-maclaurin.github.io/][my personal blog]].
 (with-eval-after-load 'ox
   (require 'ox-hugo))
 
-;; The [[https://magit.vc/][magit]] package is an interface for Git inside Emacs. I use it for all Git-related operations.
-;;
-;; I have bound ~C-x m~ to ~magit-status~ for quicker access to Magit:
+;; The [[https://magit.vc/][magit]] package is an interface for Git
+;; inside Emacs. I use it for all Git-related operations.  I have bound
+;; ~C-x m~ to ~magit-status~ for quicker access to Magit:
 (global-set-key (kbd "C-x m") 'magit-status)
 
 ;; This line opens the ~emacs.d~ directory with ~C-x .~
 (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/.emacs.d/init.el")))
 
-;; Change the cursor type to bar, as I prefer it in non-modal editors.
-;; (setq-default cursor-type 'box)
-
-;; avy allows you to jump around text. When a single char is entered, avy highlights candidates.
-;;
-;; ~C-;~ is bound to ~avy-goto-line~ to enable a shortcut for this functionality:
+;; avy allows you to jump around text. When a single char is entered,
+;; avy highlights candidates.  ~C-;~ is bound to ~avy-goto-line~ to
+;; enable a shortcut for this functionality:
 (global-set-key (kbd "C-;") 'avy-goto-char)
 
 ;; A convenient key binding for line jumping in avy...
 (global-set-key (kbd "C-'") 'avy-goto-line)
 
-;; Remap ~C-j~ and ~C-k~ to ~PageUp~ and ~PageDn~ respectively (via evil):
-;; (global-set-key (kbd "C-j") (lambda () (interactive) (evil-scroll-down 0)))
-;; (global-set-key (kbd "C-k") (lambda () (interactive) (evil-scroll-up 0)))
+;; Remap ~C-j~ and ~C-k~ to ~PageUp~ and ~PageDn~ respectively (via
+;; evil): (global-set-key (kbd "C-j") (lambda () (interactive)
+;; (evil-scroll-down 0))) (global-set-key (kbd "C-k") (lambda ()
+;; (interactive) (evil-scroll-up 0)))
 
-;; I use evil exclusively for text editing. For any other arbitrary buffer I use the default Emacs keybindings. To quickly toggle between the modes I use ~C-z~:
-;; (global-set-key (kbd "C-z" (lambda () (interactive) (evil-mode))))
+;; I use evil exclusively for text editing. For any other arbitrary
+;; buffer I use the default Emacs keybindings. To quickly toggle
+;; between the modes I use ~C-z~: (global-set-key (kbd "C-z" (lambda
+;; () (interactive) (evil-mode))))
 
-;; This package provides relative line numbers globally and plays well with evil.
+;; This package provides relative line numbers globally and plays well
+;; with evil.
 (require 'linum-relative)
 (linum-on)
 
-;; Ivy is an advance and extensive completion mechanism. Out of the box it provides helpful completions for commands, dired, swiper, buffers and more...
+;; Ivy is an advance and extensive completion mechanism. Out of the
+;; box it provides helpful completions for commands, dired, swiper,
+;; buffers and more...
 (ivy-mode)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
@@ -125,7 +138,9 @@
 
 ;;(global-set-key (kbd "<escape>") #'god-mode-all)
 
-;; [[https://github.com/skeeto/elfeed][elfeed]] is a package I use to serve RSS feeds I am subscribed to. The following lines define the subscription list.
+;; [[https://github.com/skeeto/elfeed][elfeed]] is a package I use to
+;; serve RSS feeds I am subscribed to. The following lines define the
+;; subscription list.
 (setq elfeed-feeds
       '("https://ben-maclaurin.github.io/index.xml"
 	"https://ciechanow.ski/atom.xml"
@@ -135,24 +150,30 @@
 ;; ~C-x w~ has been established as a keybinding to launch elfeed:
 (global-set-key (kbd "C-x w") 'elfeed)
 
-;; org-capture is a helpful utility which allows me to quickly collate thoughts, ideas or tasks in their context.
-;;
-;; I have specified the following templates:
+;; org-capture is a helpful utility which allows me to quickly collate
+;; thoughts, ideas or tasks in their context.  I have specified the
+;; following templates:
 (setq org-capture-templates
        '(("j" "Journal entry" entry (file+datetree "~/org/journal.org")
-          "\n* %?\nEntered on %U\n #+begin_quote\n%i\n#+end_quote\n")
-  	  ("t" "Task" entry (file "~/org/task.org")
-           "\n* TODO %^{Title} %? %^g \n")
+          "* %?\nEntered on %U\n #+begin_quote\n%i\n#+end_quote")
+	  ;; Capital T for clocked task (clock starts automatically)
+  	  ("T" "Task" entry (file "~/org/task.org")
+           "* TODO %^{Title} %? %^g" :prepend t :clock-in)
+    	  ("t" "Task" entry (file "~/org/task.org")
+           "* TODO %^{Title} %? %^g" :prepend t)
    	  ("b" "Blog" entry (file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")
-           "\n* TODO %^{Title} %^g \n:PROPERTIES:\n:EXPORT_HUGO_SECTION: post\n:EXPORT_FILE_NAME: %^{Filename}\n:EXPORT_OPTIONS: toc:2\n:END:\n %? \n" :prepend t)
+           "* TODO %^{Title} %^g \n:PROPERTIES:\n:EXPORT_HUGO_SECTION: post\n:EXPORT_FILE_NAME: %^{Filename}\n:EXPORT_OPTIONS: toc:2\n:END:\n %?" :prepend t)
 	  ("c" "Code snippet" entry (file "~/org/snippet.org")
-           "\n* %^{Title}\n%?\n\n#+begin_src %^{Language|lisp|rust|typescript}\n%i#+end_src\n\n [[file:%F::%^{Line number1}][Context]] \n")))
+           "* %^{Title}\n%?\n\n#+begin_src %^{Language|lisp|rust|typescript}\n%i#+end_src\n\n [[file:%F::%^{Line number1}][Context]]")))
 
-;; I have extended the ~(next-line)~ and ~(previous-line)~ mnemonics (~C-n~/~C-p~) as ~M-n~ and ~M-p~ which jump eight lines (plus or minus depending on direction):
+;; I have extended the ~(next-line)~ and ~(previous-line)~ mnemonics
+;; (~C-n~/~C-p~) as ~M-n~ and ~M-p~ which jump eight lines (plus or
+;; minus depending on direction):
 (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
 (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
 
 (global-set-key (kbd "C-c c") (lambda () (interactive) (org-capture)))
+(global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
 
 (require 'which-key)
 (which-key-mode)
