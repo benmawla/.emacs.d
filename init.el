@@ -160,7 +160,7 @@
           "* %?\nEntered on %U\n #+begin_quote\n%i\n#+end_quote")
 	  ;; Capital T for clocked task (clock starts automatically)
   	  ("T" "Task" entry (file "~/org/task.org")
-           "* TODO %^{Title} %? %^g" :prepend t :clock-in)
+           "* TODO %^{Title} %? %^g" :clock-in)
     	  ("t" "Task" entry (file "~/org/task.org")
            "* TODO %^{Title} %? %^g" :prepend t)
    	  ("b" "Blog" entry (file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")
