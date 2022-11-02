@@ -13,7 +13,9 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-;; The following lines make several modifications to the default Emacs interface. These are designed to make the display less cluttered with more room for the buffer.
+;; The following lines make several modifications to the default Emacs
+;; interface. These are designed to make the display less cluttered
+;; with more room for the buffer.
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
