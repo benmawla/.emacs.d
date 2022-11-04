@@ -29,10 +29,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("7343e856679eef5ad722f026037c92e5c60fc9eed6f38ef86b4170b3e524fee3" "05b767a3f3a37ac46353fd88f194934d82eb6c3644c3b8da883752f57513e7aa" "73a183da135380d11ea344ccfe4e78dfe0a6ddcf09f59f050d373f7b4c397c19" "6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" "a55c6f55eacfa36389dffc8672420b80454db33b59843a1923f3e3054a4643ca" "fb3f55ac1ca4d5ba0d35b5507e28fa392b59e796a40d25497b23fd857892f74d" "2e59c24f4daea67be42e30f1e9b40b3169708c5dc97c55e94347380be783499b" "33cd1d4d57fdad620c7578ddf7372acb9a7ea106903c152b06781f8554b8e4c9" "88550f210943832ace0ab1655c541f3912ceaab30e83843682d623c6808502ad" "d97092d4087a2a1455121ad6ff299130083853ba3c4c6b325685a59d68f8e596" "23fc3954a54fd384904994b6b4088f73b57bd9e75b12a1c965306915da8c242a" "5d7bf3ce124535c2415b69c7e017a6258150a11cdfc3029b53310ff50e794967" default))
+   '("d50da51d7dc41c7fc1ce9409a74fd7661540dc4bf54ef55148e59a7763318112" "d0a35d7f6d15d501525e2e134a7254096fc72ae42c0946458372bc7fd00a73ac" "570263442ce6735821600ec74a9b032bc5512ed4539faf61168f2fdf747e0668" "3c93094d214c034a89ed81a4bba720a23b090f38f7923a442c879c2bd4dcce5b" "7343e856679eef5ad722f026037c92e5c60fc9eed6f38ef86b4170b3e524fee3" "05b767a3f3a37ac46353fd88f194934d82eb6c3644c3b8da883752f57513e7aa" "73a183da135380d11ea344ccfe4e78dfe0a6ddcf09f59f050d373f7b4c397c19" "6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" "a55c6f55eacfa36389dffc8672420b80454db33b59843a1923f3e3054a4643ca" "fb3f55ac1ca4d5ba0d35b5507e28fa392b59e796a40d25497b23fd857892f74d" "2e59c24f4daea67be42e30f1e9b40b3169708c5dc97c55e94347380be783499b" "33cd1d4d57fdad620c7578ddf7372acb9a7ea106903c152b06781f8554b8e4c9" "88550f210943832ace0ab1655c541f3912ceaab30e83843682d623c6808502ad" "d97092d4087a2a1455121ad6ff299130083853ba3c4c6b325685a59d68f8e596" "23fc3954a54fd384904994b6b4088f73b57bd9e75b12a1c965306915da8c242a" "5d7bf3ce124535c2415b69c7e017a6258150a11cdfc3029b53310ff50e794967" default))
  '(org-agenda-files '("~/org/task.org"))
  '(package-selected-packages
-   '(ef-themes elfeed which-key counsel ivy evil-collection linum-relative avy magit ox-hugo evil rust-mode tree-sitter-langs tree-sitter use-package eglot)))
+   '(embark moody org-roam ef-themes elfeed which-key counsel ivy evil-collection linum-relative avy magit ox-hugo evil rust-mode tree-sitter-langs tree-sitter use-package eglot)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -147,6 +147,7 @@
       '("https://ben-maclaurin.github.io/index.xml"
 	"https://ciechanow.ski/atom.xml"
 	"https://fasterthanli.me/index.xml"
+	"https://www.lesswrong.com/feed.xml?view=frontpage-rss&karmaThreshold=30"
         "https://hnrss.org/frontpage"))
 
 ;; ~C-x w~ has been established as a keybinding to launch elfeed:
@@ -163,7 +164,7 @@
            "* TODO %^{Title} %? %^g" :clock-in)
     	  ("t" "Task" entry (file "~/org/task.org")
            "* TODO %^{Title} %? %^g" :prepend t)
-	  ("n" "Note" entry (file "~/org/note.org")
+	  ("n" "Note" entry (file "~/oxrg/note.org")
            "* %? %^g")
    	  ("b" "Blog" entry (file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")
            "* TODO %^{Title} %^g \n:PROPERTIES:\n:EXPORT_HUGO_SECTION: post\n:EXPORT_FILE_NAME: %^{Filename}\n:EXPORT_OPTIONS: toc:2\n:END:\n %?" :prepend t)
@@ -178,6 +179,11 @@
 
 (global-set-key (kbd "C-c c") (lambda () (interactive) (org-capture)))
 (global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
+
+(global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
+
+(global-set-key (kbd "C-.") (lambda () (interactive) (embark-act)))
+;; Also look into embark-dwim?
 
 (require 'which-key)
 (which-key-mode)
