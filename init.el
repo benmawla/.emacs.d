@@ -1,189 +1,135 @@
-;; This init file is documented in full at:
-;; https://ben-maclaurin.github.io/post/init-el-file/
+(require 'package)
 
-;; These lines initialise the package archives.
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
 (unless package-archive-contents
- (package-refresh-contents))
-			 
+  (package-refresh-contents))
+
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
-			 
-;; The following lines make several modifications to the default Emacs
-;; interface. These are designed to make the display less cluttered
-;; with more room for the buffer.
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+(use-package command-log-mode)
+
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)	 
 (tool-bar-mode -1)	 
-(menu-bar-mode -1)	 
-			 
-(require 'use-package)
-(setq use-package-always-ensure t)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("d50da51d7dc41c7fc1ce9409a74fd7661540dc4bf54ef55148e59a7763318112" "d0a35d7f6d15d501525e2e134a7254096fc72ae42c0946458372bc7fd00a73ac" "570263442ce6735821600ec74a9b032bc5512ed4539faf61168f2fdf747e0668" "3c93094d214c034a89ed81a4bba720a23b090f38f7923a442c879c2bd4dcce5b" "7343e856679eef5ad722f026037c92e5c60fc9eed6f38ef86b4170b3e524fee3" "05b767a3f3a37ac46353fd88f194934d82eb6c3644c3b8da883752f57513e7aa" "73a183da135380d11ea344ccfe4e78dfe0a6ddcf09f59f050d373f7b4c397c19" "6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" "a55c6f55eacfa36389dffc8672420b80454db33b59843a1923f3e3054a4643ca" "fb3f55ac1ca4d5ba0d35b5507e28fa392b59e796a40d25497b23fd857892f74d" "2e59c24f4daea67be42e30f1e9b40b3169708c5dc97c55e94347380be783499b" "33cd1d4d57fdad620c7578ddf7372acb9a7ea106903c152b06781f8554b8e4c9" "88550f210943832ace0ab1655c541f3912ceaab30e83843682d623c6808502ad" "d97092d4087a2a1455121ad6ff299130083853ba3c4c6b325685a59d68f8e596" "23fc3954a54fd384904994b6b4088f73b57bd9e75b12a1c965306915da8c242a" "5d7bf3ce124535c2415b69c7e017a6258150a11cdfc3029b53310ff50e794967" default))
- '(org-agenda-files '("~/org/task.org"))
- '(package-selected-packages
-   '(embark moody org-roam ef-themes elfeed which-key counsel ivy evil-collection linum-relative avy magit ox-hugo evil rust-mode tree-sitter-langs tree-sitter use-package eglot)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(menu-bar-mode -1)
 
-;; Enables ~tree-sitter-mode~ globally. Treesitter is an incremental
-;; parsing library.
-(global-tree-sitter-mode)
-
-;; Instantiates a major mode for the
-;; [[https://www.rust-lang.org/][Rust programming language]].
-(require 'rust-mode)
-
-;; This line maps ~C-u~ to ~PageUp~ in evil mode:
-(setq evil-want-C-u-scroll t) 
-
-;; Enable evil mode, which provides Vim keybinding support for Emacs:
-(require 'evil)
-(evil-mode 0)
-
-;; I use the key-chord package to remap ~jk~ key presses in quick
-;; succession to escape:
-(setq key-chord-two-keys-delay 0.3)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-(key-chord-mode 1)
-
-;; I use the accessible ~ef-themes~ collection by
-;; [[https://protesilaos.com/][Protesilaos Stavrou]].
-(load-theme 'ef-cherie)
-
-;; The following line remaps the Emacs meta <M> modifier to the
-;; slightly more erognomic macOS command key.
 (setq mac-command-modifier 'meta)
 
-;; This line sets the editor font size and face.
-(set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
+(set-face-attribute 'default nil :font "JetBrains Mono" :height 180)
 
-;; ~ox-hugo~ provides a convenient way to export `.org` files to
-;; Hugo-compatible markdown. It is used in the generation of
-;; [[https://ben-maclaurin.github.io/][my personal blog]].
-(with-eval-after-load 'ox
-  (require 'ox-hugo))
+(global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")))
 
-;; The [[https://magit.vc/][magit]] package is an interface for Git
-;; inside Emacs. I use it for all Git-related operations.  I have bound
-;; ~C-x m~ to ~magit-status~ for quicker access to Magit:
-(global-set-key (kbd "C-x m") 'magit-status)
+(global-set-key (kbd "C-x r .") (lambda () (interactive) (load-file "~/.emacs.d/init.el")))
 
-;; This line opens the ~emacs.d~ directory with ~C-x .~
-(global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/.emacs.d/init.el")))
+(global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
 
-;; avy allows you to jump around text. When a single char is entered,
-;; avy highlights candidates.  ~C-;~ is bound to ~avy-goto-line~ to
-;; enable a shortcut for this functionality:
-(global-set-key (kbd "C-;") 'avy-goto-char)
-
-;; A convenient key binding for line jumping in avy...
-(global-set-key (kbd "C-'") 'avy-goto-line)
-
-;; Remap ~C-j~ and ~C-k~ to ~PageUp~ and ~PageDn~ respectively (via
-;; evil): (global-set-key (kbd "C-j") (lambda () (interactive)
-;; (evil-scroll-down 0))) (global-set-key (kbd "C-k") (lambda ()
-;; (interactive) (evil-scroll-up 0)))
-
-;; I use evil exclusively for text editing. For any other arbitrary
-;; buffer I use the default Emacs keybindings. To quickly toggle
-;; between the modes I use ~C-z~: (global-set-key (kbd "C-z" (lambda
-;; () (interactive) (evil-mode))))
-
-;; This package provides relative line numbers globally and plays well
-;; with evil.
-;; (require 'linum-relative)
-;; (linum-on)
-
-;; Ivy is an advance and extensive completion mechanism. Out of the
-;; box it provides helpful completions for commands, dired, swiper,
-;; buffers and more...
-(ivy-mode)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
-;; enable this if you want `swiper' to use it
-;; (setq search-default-mode #'char-fold-to-regexp)
-(global-set-key "\C-s" 'swiper)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key (kbd "<f6>") 'ivy-resume)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "<f1> f") 'counsel-describe-function)
-(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
-(global-set-key (kbd "<f1> l") 'counsel-find-library)
-(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-(global-set-key (kbd "C-c g") 'counsel-git)
-(global-set-key (kbd "C-c j") 'counsel-git-grep)
-(global-set-key (kbd "C-c k") 'counsel-ag)
-(global-set-key (kbd "C-x l") 'counsel-locate)
-(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
-
-;;(require 'god-mode)
-;;(god-mode)
-
-;;(global-set-key (kbd "<escape>") #'god-mode-all)
-
-;; [[https://github.com/skeeto/elfeed][elfeed]] is a package I use to
-;; serve RSS feeds I am subscribed to. The following lines define the
-;; subscription list.
-(setq elfeed-feeds
-      '("https://ben-maclaurin.github.io/index.xml"
-	"https://ciechanow.ski/atom.xml"
-	"https://fasterthanli.me/index.xml"
-	"https://www.lesswrong.com/feed.xml?view=frontpage-rss&karmaThreshold=30"
-        "https://hnrss.org/frontpage"))
-
-;; ~C-x w~ has been established as a keybinding to launch elfeed:
-(global-set-key (kbd "C-x w") 'elfeed)
-
-;; org-capture is a helpful utility which allows me to quickly collate
-;; thoughts, ideas or tasks in their context.  I have specified the
-;; following templates:
-(setq org-capture-templates
-       '(("j" "Journal entry" entry (file+datetree "~/org/journal.org")
-          "* %?\nEntered on %U\n #+begin_quote\n%i\n#+end_quote")
-	  ;; Capital T for clocked task (clock starts automatically)
-  	  ("T" "Task" entry (file "~/org/task.org")
-           "* TODO %^{Title} %? %^g" :clock-in)
-    	  ("t" "Task" entry (file "~/org/task.org")
-           "* TODO %^{Title} %? %^g" :prepend t)
-	  ("n" "Note" entry (file "~/oxrg/note.org")
-           "* %? %^g")
-   	  ("b" "Blog" entry (file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")
-           "* TODO %^{Title} %^g \n:PROPERTIES:\n:EXPORT_HUGO_SECTION: post\n:EXPORT_FILE_NAME: %^{Filename}\n:EXPORT_OPTIONS: toc:2\n:END:\n %?" :prepend t)
-	  ("c" "Code snippet" entry (file "~/org/snippet.org")
-           "* %^{Title}\n%?\n\n#+begin_src %^{Language|lisp|rust|typescript}\n%i#+end_src\n\n [[file:%F::%^{Line number1}][Context]]")))
-
-;; I have extended the ~(next-line)~ and ~(previous-line)~ mnemonics
-;; (~C-n~/~C-p~) as ~M-n~ and ~M-p~ which jump eight lines (plus or
-;; minus depending on direction):
 (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
 (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
 
-(global-set-key (kbd "C-c c") (lambda () (interactive) (org-capture)))
-(global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
-
 (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
 
-(global-set-key (kbd "C-.") (lambda () (interactive) (embark-act)))
-;; Also look into embark-dwim?
+(hl-line-mode)
 
-(require 'which-key)
-(which-key-mode)
+(global-tree-sitter-mode)
+
+(use-package rust-mode
+    :config
+  (require 'rust-mode))
+
+(use-package ef-themes
+    :config
+  (load-theme 'ef-autumn))
+
+(use-package ox-hugo
+    :config
+  (with-eval-after-load 'ox
+    (require 'ox-hugo)))
+
+(use-package magit
+    :config
+  (global-set-key (kbd "C-x m") 'magit-status))
+
+(use-package avy
+    :config
+  (global-set-key (kbd "C-;") 'avy-goto-char))
+
+(use-package counsel)
+
+(use-package ivy
+    :config
+  (ivy-mode)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  ;; enable this if you want `swiper' to use it
+  ;; (setq search-default-mode #'char-fold-to-regexp)
+  (global-set-key "\C-s" 'swiper)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (global-set-key (kbd "<f6>") 'ivy-resume)
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+  (global-set-key (kbd "<f1> l") 'counsel-find-library)
+  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c k") 'counsel-ag)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+
+(use-package elfeed
+    :config
+  (setq elfeed-feeds
+        '("https://ben-maclaurin.github.io/index.xml"
+          "https://ciechanow.ski/atom.xml"
+          "https://fasterthanli.me/index.xml"
+          "https://hnrss.org/frontpage")))
+
+(global-set-key (kbd "C-x w") 'elfeed)
+
+;; (use-package embark
+;;     :config
+;;   (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
+
+(use-package which-key
+    :config
+  (require 'which-key)
+  (which-key-mode))
+
+(use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory (file-truename "~/org/roam"))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n j" . org-roam-dailies-capture-today))
+    :config
+    (org-roam-setup))
+
+(use-package eglot)
+
+(use-package org-bullets
+    :config
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(use-package expand-region
+    :bind ("C-." . 'er/expand-region))
+
+(use-package company
+    :config
+  (add-hook 'after-init-hook 'global-company-mode))
