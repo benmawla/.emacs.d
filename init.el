@@ -36,9 +36,16 @@
 (setq mac-command-modifier 'meta)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; font
+  ;; font
 
-(set-face-attribute 'default nil :font "IBM Plex Mono" :height 165)
+  (use-package mixed-pitch
+  :hook
+  (text-mode . mixed-pitch-mode))
+
+  (set-face-attribute 'default nil :font "SF Mono-18")
+  (set-face-attribute 'fixed-pitch nil :font "SF Mono-18")
+  (set-face-attribute 'variable-pitch nil :font "SF Pro Display-18")
+;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; open this file
@@ -49,6 +56,16 @@
 ;; reload init file
 
 (global-set-key (kbd "C-x r .") (lambda () (interactive) (load-file "~/.emacs.d/init.el")))
+
+(custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+)
+
+(setq org-hide-emphasis-markers t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org todo keywords
@@ -80,7 +97,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; line numbers
 
-(global-display-line-numbers-mode)
+;;(global-display-line-numbers-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; save place
@@ -91,6 +108,33 @@
 ;; allow hash key entry on macOS
 
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+
+(setq initial-scratch-message "
+;; Maxims:
+;;  
+;; Don't take refuge in complexity.
+;;
+;; When trying to understand a complex real-world situation,
+;; think of an everyday analogue.
+;;
+;; The world is much more uncertain than you think.
+;;
+;; Information is only valuable if it can change your decision.
+;;
+;; Good decisions sometimes have poor outcomes.
+;;
+;; Think probabilistically about the world.
+;;
+;; Strive hard to avoid envy.
+;;
+;; Make pleasure-enhancing decisions long in advance, to increase
+;; the utility of anticipation.
+;;
+;; 'You want to get into a mental state where if the bad outcome
+;; comes to pass, you will only nod your head and say 'I knew
+;; this card was in the deck, and I knew the odds, and I would
+;; make the same bets again, given the same opportunities.'
+    ")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; tree-sitter
@@ -108,7 +152,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ef-themes
 
-(use-package ef-themes :config (load-theme 'ef-light))
+(use-package ef-themes :config (load-theme 'ef-cherie))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ox-hugo
@@ -147,16 +191,13 @@
   (vertico-mode)
   (setq vertico-count 20))
 
-;; Configure directory extension.
 (use-package vertico-directory
     :after vertico
     :ensure nil
-    ;; More convenient directory navigation commands
     :bind (:map vertico-map
                 ("RET" . vertico-directory-enter)
                 ("DEL" . vertico-directory-delete-char)
                 ("M-DEL" . vertico-directory-delete-word))
-    ;; Tidy shadowed file names
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -173,8 +214,8 @@
 
 (global-set-key (kbd "C-q") nil)
 (global-set-key (kbd "C-c g") 'counsel-git-grep)
-(global-set-key (kbd "C-SPC") 'counsel-git)
-(global-set-key (kbd "M-SPC") 'switch-to-buffer)
+(global-set-key (kbd "M-SPC") 'counsel-git)
+(global-set-key (kbd "C-SPC") 'switch-to-buffer)
 (global-set-key (kbd "C-x b") nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -234,8 +275,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; expand-region
 
-(use-package expand-region
-    :bind ("C-." . 'er/expand-region))
+;; (use-package expand-region
+;;     :bind ("C-" . 'er/expand-region))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; company-mode
@@ -284,9 +325,10 @@
  '("-" . negative-argument)
  '(";" . meow-reverse)
  '("," . meow-inner-of-thing)
- '("." . meow-bounds-of-thing)
- '("[" . meow-beginning-of-thing)
- '("]" . meow-end-of-thing)
+ ;;'("." . meow-bounds-of-thing)
+ '("." . er/expand-region)
+ ;;'("[" . meow-beginning-of-thing)
+ ;;'("]" . meow-end-of-thing)
  '("a" . meow-append)
  '("A" . meow-open-below)
  '("b" . meow-back-word)
@@ -322,7 +364,7 @@
  '("t" . meow-till)
  '("u" . meow-undo)
  '("U" . meow-undo-in-selection)
- '("/" . meow-visit)
+ '("/" . meow-bounds-of-thing)
  '("e" . meow-mark-word)
  '("E" . meow-mark-symbol)
  '("v" . meow-line)
@@ -335,6 +377,11 @@
  '("\"" . meow-hyper-string)
  '("(" . meow-hyper-paren)
  '(")" . meow-hyper-paren)
+ '("'" . meow-hyper-quote)
+ '("{" . meow-hyper-curly)
+ '("}" . meow-hyper-curly)
+ '("[" . meow-hyper-bracket)
+ '("]" . meow-hyper-bracket)
  '("<escape>" . ignore)))
 
 (use-package meow
@@ -347,12 +394,15 @@
 
 (meow-thing-register 'tag '(pair ("<") (">")) '(pair ("<") (">")))
 
-(add-to-list 'meow-char-thing-table '(?\" . string))
 (add-to-list 'meow-char-thing-table '(?\( . round))
 (add-to-list 'meow-char-thing-table '(?\) . round))
+(add-to-list 'meow-char-thing-table '(?\" . string))
 
 (add-to-list 'meow-char-thing-table '(?\{ . curly))
 (add-to-list 'meow-char-thing-table '(?\} . curly))
+
+(add-to-list 'meow-char-thing-table '(?\[ . square))
+(add-to-list 'meow-char-thing-table '(?\] . square))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; meow-hyper
@@ -363,7 +413,6 @@
   :lighter " [H]"
   :keymap meow-hyper-keymap)
 
-;; meow-define-state creates the variable
 (setq meow-cursor-type-hyper 'hollow)
 
 (meow-define-keys 'hyper
@@ -371,26 +420,64 @@
   '("h" . meow-hyperhtml-mode))
 
 (defun meow-hyper-string () (interactive)
-       (let (pos1 pos2 bds)
-         (if (and transient-mark-mode mark-active)
-             (progn
-               (goto-char (region-end))
-               (insert "\"")
-               (goto-char (region-beginning))
-               (insert "\""))
-             (insert "\"\"")
-             (meow-normal-mode))))
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert "\"")
+             (goto-char (region-beginning))
+             (insert "\""))
+           (insert "\"\"")
+           (meow-normal-mode)))
+
+(defun meow-hyper-quote () (interactive)
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert "'")
+             (goto-char (region-beginning))
+             (insert "'"))
+           (insert "'")
+           (meow-normal-mode)))
 
 (defun meow-hyper-paren () (interactive)
-       (let (pos1 pos2 bds)
-         (if (and transient-mark-mode mark-active)
-             (progn
-               (goto-char (region-end))
-               (insert ")")
-               (goto-char (region-beginning))
-               (insert "("))
-             (insert "()")
-             (meow-normal-mode))))
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert ")")
+             (goto-char (region-beginning))
+             (insert "("))
+           (insert "()")
+           (meow-normal-mode)))
+
+(defun meow-hyper-curly () (interactive)
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert "}")
+             (goto-char (region-beginning))
+             (insert "{"))
+           (insert "{}")
+           (meow-normal-mode)))
+
+(defun meow-hyper-bracket () (interactive)
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert "]")
+             (goto-char (region-beginning))
+             (insert "["))
+           (insert "[]")
+           (meow-normal-mode)))
+
+  (defun meow-hyper-tag () (interactive)
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert ">")
+             (goto-char (region-beginning))
+             (insert "<"))
+           (insert "<>")
+           (meow-normal-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; meow-hyper-html
@@ -401,7 +488,6 @@
   :lighter " [HH]"
   :keymap meow-hyperhtml-keymap)
 
-;; meow-define-state creates the variable
 (setq meow-cursor-type-hyperhtml 'hbar)
 
 (meow-define-keys 'hyperhtml
@@ -412,48 +498,44 @@
   '("P" . meow-hyper-html-p))
 
 (defun meow-hyper-html-div () (interactive)
-       (let (pos1 pos2 bds)
-         (if (and transient-mark-mode mark-active)
-             (progn
-               (goto-char (region-end))
-               (insert "</div>")
-               (goto-char (region-beginning))
-               (insert "<div>") (meow-normal-mode))
-             (insert "<div></div>")
-             (meow-normal-mode))))
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert "</div>")
+             (goto-char (region-beginning))
+             (insert "<div>") (meow-normal-mode))
+           (insert "<div></div>")
+           (meow-normal-mode)))
 
 (defun meow-hyper-html-div-class () (interactive)
-       (let (pos1 pos2 bds)
-         (if (and transient-mark-mode mark-active)
-             (progn
-               (goto-char (region-end))
-               (insert "</div>")
-               (goto-char (region-beginning))
-               (insert "<div className=\"\">") (meow-normal-mode))
-             (insert "<div className=\"\"></div>")
-             (meow-normal-mode))))
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert "</div>")
+             (goto-char (region-beginning))
+             (insert "<div className=\"\">") (meow-normal-mode))
+           (insert "<div className=\"\"></div>")
+           (meow-normal-mode)))
 
 (defun meow-hyper-html-p () (interactive)
-       (let (pos1 pos2 bds)
-         (if (and transient-mark-mode mark-active)
-             (progn
-               (goto-char (region-end))
-               (insert "</p>")
-               (goto-char (region-beginning))
-               (insert "<p>") (meow-normal-mode))
-             (insert "<p></p>")
-             (meow-normal-mode))))
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert "</p>")
+             (goto-char (region-beginning))
+             (insert "<p>") (meow-normal-mode))
+           (insert "<p></p>")
+           (meow-normal-mode)))
 
 (defun meow-hyper-html-p-class () (interactive)
-       (let (pos1 pos2 bds)
-         (if (and transient-mark-mode mark-active)
-             (progn
-               (goto-char (region-end))
-               (insert "</p>")
-               (goto-char (region-beginning))
-               (insert "<p className=\"\">") (meow-normal-mode))
-             (insert "<p className=\"\"></p>")
-             (meow-normal-mode))))
+       (if (and transient-mark-mode mark-active)
+           (progn
+             (goto-char (region-end))
+             (insert "</p>")
+             (goto-char (region-beginning))
+             (insert "<p className=\"\">") (meow-normal-mode))
+           (insert "<p className=\"\"></p>")
+           (meow-normal-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; typescript-mode
@@ -461,22 +543,15 @@
 (use-package typescript-mode
     :after tree-sitter
     :config
-    ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
-    ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
     (define-derived-mode typescriptreact-mode typescript-mode
       "TypeScript TSX")
 
-    ;; use our derived mode for tsx files
     (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
-    ;; by default, typescript-mode is mapped to the treesitter typescript parser
-    ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
     (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; aphelia  
 
-;; auto-format different source code files extremely intelligently
-;; https://github.com/radian-software/apheleia
 (use-package apheleia
     :ensure t
     :config
@@ -528,9 +603,27 @@
 
   (move-text-default-bindings))
 
+(use-package clojure-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; devdocs
 
 (use-package devdocs
     :config
   (global-set-key (kbd "C-h D") 'devdocs-lookup))
+
+(use-package ox-epub)
+
+(use-package rainbow-delimiters
+    :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+(use-package olivetti)
+
+(use-package org-bullets
+    :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(use-package anki-editor
+    :bind (("C-c i i" . anki-editor-insert-note)
+           ("C-c i p" . anki-editor-push-notes)))
