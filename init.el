@@ -2,7 +2,6 @@
 ;; archives 
 
 (require 'package)
-
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
@@ -22,6 +21,14 @@
 
 (use-package command-log-mode)
 
+(add-hook 'text-mode-hook '(lambda ()
+                            (setq truncate-lines nil
+                             word-wrap t)))
+
+(add-hook 'prog-mode-hook '(lambda ()
+                            (setq truncate-lines t
+                             word-wrap nil)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; display
 
@@ -29,6 +36,34 @@
 (scroll-bar-mode -1)	 
 (tool-bar-mode -1)	 
 (menu-bar-mode -1)
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+;; Make a clean & minimalist frame
+(use-package frame
+    :straight (:type built-in)
+    :config
+    (setq-default default-frame-alist
+                  (append (list
+                           '(internal-border-width . 40)
+                           '(left-fringe    . 0)
+                           '(right-fringe   . 0)
+                           '(tool-bar-lines . 0)
+                           '(menu-bar-lines . 0)
+                           '(vertical-scroll-bars . nil))))
+    (setq-default window-resize-pixelwise t)
+    (setq-default frame-resize-pixelwise t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; meta key
@@ -42,9 +77,9 @@
   :hook
   (text-mode . mixed-pitch-mode))
 
-  (set-face-attribute 'default nil :font "SF Mono-18")
-  (set-face-attribute 'fixed-pitch nil :font "SF Mono-18")
-  (set-face-attribute 'variable-pitch nil :font "SF Pro Display-18")
+  (set-face-attribute 'default nil :font "Iosevka Comfy-18")
+  (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy-18")
+  (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy-18")
 ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -57,13 +92,18 @@
 
 (global-set-key (kbd "C-x r .") (lambda () (interactive) (load-file "~/.emacs.d/init.el")))
 
+(require 'org-mouse)
+
 (custom-set-faces
-  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
-  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-)
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
 
 (setq org-hide-emphasis-markers t)
 
@@ -97,7 +137,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; line numbers
 
-;;(global-display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; save place
@@ -109,32 +149,9 @@
 
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 
-(setq initial-scratch-message "
-;; Maxims:
-;;  
-;; Don't take refuge in complexity.
-;;
-;; When trying to understand a complex real-world situation,
-;; think of an everyday analogue.
-;;
-;; The world is much more uncertain than you think.
-;;
-;; Information is only valuable if it can change your decision.
-;;
-;; Good decisions sometimes have poor outcomes.
-;;
-;; Think probabilistically about the world.
-;;
-;; Strive hard to avoid envy.
-;;
-;; Make pleasure-enhancing decisions long in advance, to increase
-;; the utility of anticipation.
-;;
-;; 'You want to get into a mental state where if the bad outcome
-;; comes to pass, you will only nod your head and say 'I knew
-;; this card was in the deck, and I knew the odds, and I would
-;; make the same bets again, given the same opportunities.'
-    ")
+(setq initial-buffer-choice "~/org/learn/self.org")
+
+(global-set-key (kbd "M-s") 'save-some-buffers)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; tree-sitter
@@ -152,7 +169,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ef-themes
 
-(use-package ef-themes :config (load-theme 'ef-cherie))
+(use-package ef-themes :config (load-theme 'ef-trio-light))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ox-hugo
@@ -189,7 +206,12 @@
 (use-package vertico
     :init
   (vertico-mode)
-  (setq vertico-count 20))
+  (setq vertico-count 20)
+  (setq completion-styles '(substring orderless basic))
+
+  (setq read-file-name-completion-ignore-case t
+        read-buffer-completion-ignore-case t
+        completion-ignore-case t))
 
 (use-package vertico-directory
     :after vertico
@@ -199,6 +221,17 @@
                 ("DEL" . vertico-directory-delete-char)
                 ("M-DEL" . vertico-directory-delete-word))
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+
+;; Optionally use the `orderless' completion style.
+(use-package orderless
+    :init
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+  ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; marginalia
@@ -355,7 +388,8 @@
  '("n" . meow-search)
  '("o" . meow-open-below)
  '("O" . meow-open-above)
- '("p" . meow-yank)
+ ;;'("p" . meow-yank)
+ '("p" . yank)
  '("q" . meow-quit)
  '("Q" . meow-goto-line)
  '("r" . meow-replace)
@@ -373,7 +407,7 @@
  '("Y" . meow-sync-grab)
  '("z" . meow-pop-selection)
  '("'" . repeat)
- '("s" . meow-hyper-mode)
+ ;;'("s" . meow-hyper-mode)
  '("\"" . meow-hyper-string)
  '("(" . meow-hyper-paren)
  '(")" . meow-hyper-paren)
@@ -627,3 +661,18 @@
 (use-package anki-editor
     :bind (("C-c i i" . anki-editor-insert-note)
            ("C-c i p" . anki-editor-push-notes)))
+
+(use-package python-mode)
+
+(use-package request)
+
+(use-package restclient
+    :init
+  (require 'restclient))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("6d52e002613d477c3e65373f959525f3b10c850bf9f93013cefeb2059dc689f7" default)))
