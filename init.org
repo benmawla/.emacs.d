@@ -1040,6 +1040,7 @@ A REPL for rest-based requests.
 *** focus
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package focus)
+  (add-hook 'org-mode-hook (lambda () (focus-mode)))
 #+end_src
 
 *** undo-propose

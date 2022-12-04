@@ -97,12 +97,15 @@
 (require 'org-mouse)
 
 (custom-set-faces
-  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
-  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-)
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
 
 (setq org-hide-emphasis-markers t)
 
@@ -669,8 +672,16 @@
   (require 'restclient))
 
 (use-package focus)
+(add-hook 'org-mode-hook (lambda () (focus-mode)))
 
 (use-package undo-propose)
 
 (use-package osx-lib)
 (global-set-key (kbd "C-x j") 'osx-lib-reveal-in-finder)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("5c7436d940c0b2e35e4aa201459159075bb7b5b7a0b6d595376267484fe6dcfc" default)))
