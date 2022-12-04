@@ -667,3 +667,10 @@
 (use-package restclient
     :init
   (require 'restclient))
+
+(use-package focus)
+
+(use-package undo-propose)
+
+(use-package osx-lib)
+(global-set-key (kbd "C-x j") 'osx-lib-reveal-in-finder)

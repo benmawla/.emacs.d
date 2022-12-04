@@ -996,7 +996,6 @@ A simple mode that allows for a nice writing view/style (focused mode).
       (use-package olivetti)
 #+end_src
 
-
 *** org-bullets
 Prefix org headings with little ASCII bullets!
 
@@ -1038,4 +1037,18 @@ A REPL for rest-based requests.
             (require 'restclient))
 #+end_src
 
+*** focus
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package focus)
+#+end_src
 
+*** undo-propose
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package undo-propose)
+#+end_src
+
+*** osx-lib
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package osx-lib)
+  (global-set-key (kbd "C-x j") 'osx-lib-reveal-in-finder)
+#+end_src
