@@ -149,7 +149,7 @@ Keybinding to enable swift modification of this file.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; open this file
   
-  (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/.emacs.d/init.org")))
+  (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/..d/init.org")))
 #+end_src
 
 Once edits have been made, ~org-babel-tangle~ can be executed with
@@ -996,7 +996,6 @@ A simple mode that allows for a nice writing view/style (focused mode).
 #+begin_src lisp :tangle ~/.emacs.d/init.el
       (use-package olivetti)
 #+end_src
-
 
 
 *** org-bullets
