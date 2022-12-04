@@ -149,7 +149,7 @@ Keybinding to enable swift modification of this file.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; open this file
   
-  (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/..d/init.org")))
+  (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/.emacs.d/init.org")))
 #+end_src
 
 Once edits have been made, ~org-babel-tangle~ can be executed with
@@ -535,8 +535,7 @@ Increase a selection by a set of semantic units.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; expand-region
 
-  ;; (use-package expand-region
-  ;;     :bind ("C-" . 'er/expand-region))
+  (use-package expand-region)
 #+end_src
 
 *** company-mode
