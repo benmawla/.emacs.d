@@ -1115,6 +1115,7 @@ Highlight text inside org files:
 #+end_src
 
 *** tao-theme
+
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package tao-theme)
 #+end_src
