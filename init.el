@@ -21,6 +21,8 @@
 
 (use-package command-log-mode)
 
+(setq use-short-answers t)
+
 (cua-mode)
 
 (add-hook 'text-mode-hook '(lambda ()
@@ -58,7 +60,7 @@
     :config
     (setq-default default-frame-alist
                   (append (list
-                           '(internal-border-width . 40)
+                           '(internal-border-width . 0)
                            '(left-fringe    . 0)
                            '(right-fringe   . 0)
                            '(tool-bar-lines . 0)
@@ -79,9 +81,9 @@
   :hook
   (text-mode . mixed-pitch-mode))
 
-  (set-face-attribute 'default nil :font "Iosevka Comfy-18")
-  (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy-18")
-  (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy-18")
+  (set-face-attribute 'default nil :font "JetBrains Mono-17")
+  (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono-17")
+  (set-face-attribute 'variable-pitch nil :font "JetBrains Mono-17")
 ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -171,7 +173,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ef-themes
 
-(use-package ef-themes :config (load-theme 'ef-trio-light))
+(use-package ef-themes :config (load-theme 'ef-light))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ox-hugo
@@ -310,8 +312,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; expand-region
 
-;; (use-package expand-region
-;;     :bind ("C-" . 'er/expand-region))
+(use-package expand-region)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; company-mode
@@ -615,19 +616,6 @@
 (add-to-list 'eglot-server-programs '(elixir-mode "~/elixir-ls/language_server.sh"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; pulsar
-
-(use-package pulsar
-    :init
-  (setq pulsar-pulse t)
-  (setq pulsar-delay 0.055)
-  (setq pulsar-iterations 10)
-  (setq pulsar-face 'pulsar-magenta)
-  (setq pulsar-highlight-face 'pulsar-yellow)
-
-  (pulsar-global-mode 1))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; move-text
 
 (use-package move-text
@@ -656,10 +644,6 @@
 
 (use-package olivetti)
 
-(use-package org-bullets
-    :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
 (use-package anki-editor
     :bind (("C-c i i" . anki-editor-insert-note)
            ("C-c i p" . anki-editor-push-notes)))
@@ -671,10 +655,82 @@
 (use-package restclient
     :init
   (require 'restclient))
+
+(use-package focus)
+(add-hook 'org-mode-hook (lambda () (focus-mode)))
+
+(use-package org-modern
+      :init
+
+    (setq
+     ;; Edit settings
+     org-auto-align-tags nil
+     org-tags-column 0
+     org-catch-invisible-edits 'show-and-error
+     org-special-ctrl-a/e t
+     org-insert-heading-respect-content t
+
+     ;; Org styling, hide markup etc.
+     org-hide-emphasis-markers t
+     org-pretty-entities t
+     org-ellipsis "…"
+
+     ;; Agenda styling
+     org-agenda-tags-column 0
+     org-agenda-block-separator ?─
+     org-agenda-time-grid
+     '((daily today require-timed)
+       (800 1000 1200 1400 1600 1800 2000)
+       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+     org-agenda-current-time-string
+     "⭠ now ─────────────────────────────────────────────────")(setq
+     ;; Edit settings
+     org-auto-align-tags nil
+     org-tags-column 0
+     org-catch-invisible-edits 'show-and-error
+     org-special-ctrl-a/e t
+     org-insert-heading-respect-content t
+
+     ;; Org styling, hide markup etc.
+     org-hide-emphasis-markers t
+     org-pretty-entities t
+     org-ellipsis "…"
+
+     ;; Agenda styling
+     org-agenda-tags-column 0
+     org-agenda-block-separator ?─
+     org-agenda-time-grid
+     '((daily today require-timed)
+       (800 1000 1200 1400 1600 1800 2000)
+       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+     org-agenda-current-time-string
+     "⭠ now ─────────────────────────────────────────────────")
+    (global-org-modern-mode))
+
+  (modify-all-frames-parameters
+ '((right-divider-width . 1)
+   (internal-border-width . 40)))
+(dolist (face '(window-divider
+                window-divider-first-pixel
+                window-divider-last-pixel))
+  (face-spec-reset-face face)
+  (set-face-foreground face (face-attribute 'default :background)))
+(set-face-background 'fringe (face-attribute 'default :background))
+
+(use-package hyperbole
+    :init
+  (hyperbole-mode 1))
+
+(use-package org-remark
+    :config
+  (require 'org-remark-global-tracking)
+  (org-remark-global-tracking-mode +1))
+
+(use-package tao-theme)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("6d52e002613d477c3e65373f959525f3b10c850bf9f93013cefeb2059dc689f7" default)))
+   '("52645403935dd6f8266c3a8f831949c1e79155324efdf709b5af0d078cd6c822" default)))

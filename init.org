@@ -49,6 +49,13 @@ Less verbose package definitions and management...
 ** Core Modifications
 A series of QOL changes I have made to the default distribution.
 
+*** Use short answers
+Use short answer mode "y" and "n" instead of "yes" and "no".
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (setq use-short-answers t)
+#+end_src
+
 *** Start in cua-mode
 Always start in cua-mode, which allows for DWIM pasting, etc.
 
@@ -104,7 +111,7 @@ bar and menu bar).
       :config
       (setq-default default-frame-alist
                     (append (list
-                             '(internal-border-width . 40)
+                             '(internal-border-width . 0)
                              '(left-fringe    . 0)
                              '(right-fringe   . 0)
                              '(tool-bar-lines . 0)
@@ -136,9 +143,9 @@ Set the default font size and face.
     :hook
     (text-mode . mixed-pitch-mode))
 
-    (set-face-attribute 'default nil :font "Iosevka Comfy-18")
-    (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy-18")
-    (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy-18")
+    (set-face-attribute 'default nil :font "JetBrains Mono-17")
+    (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono-17")
+    (set-face-attribute 'variable-pitch nil :font "JetBrains Mono-17")
   ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
@@ -149,7 +156,7 @@ Keybinding to enable swift modification of this file.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; open this file
   
-  (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/..d/init.org")))
+  (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/.emacs.d/init.org")))
 #+end_src
 
 Once edits have been made, ~org-babel-tangle~ can be executed with
@@ -321,7 +328,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; ef-themes
 
-  (use-package ef-themes :config (load-theme 'ef-trio-light))
+  (use-package ef-themes :config (load-theme 'ef-light))
 #+end_src
 
 *** ox-hugo
@@ -535,8 +542,7 @@ Increase a selection by a set of semantic units.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; expand-region
 
-  ;; (use-package expand-region
-  ;;     :bind ("C-" . 'er/expand-region))
+  (use-package expand-region)
 #+end_src
 
 *** company-mode
@@ -924,23 +930,6 @@ Setup the Elixir Language Server:
 #+end_src
 
 *** pulsar
-Don't lose the cursor:
-
-#+begin_src lisp :tangle ~/.emacs.d/init.el
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; pulsar
-  
-  (use-package pulsar
-      :init
-    (setq pulsar-pulse t)
-    (setq pulsar-delay 0.055)
-    (setq pulsar-iterations 10)
-    (setq pulsar-face 'pulsar-magenta)
-    (setq pulsar-highlight-face 'pulsar-yellow)
-
-    (pulsar-global-mode 1))
-#+end_src
-
 *** move-text
 Easily move lines up and down in the editor.
 
@@ -997,11 +986,10 @@ A simple mode that allows for a nice writing view/style (focused mode).
       (use-package olivetti)
 #+end_src
 
-
 *** org-bullets
 Prefix org headings with little ASCII bullets!
 
-#+begin_src lisp :tangle ~/.emacs.d/init.el
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
   (use-package org-bullets
       :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
@@ -1039,4 +1027,96 @@ A REPL for rest-based requests.
             (require 'restclient))
 #+end_src
 
+*** focus
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package focus)
+  (add-hook 'org-mode-hook (lambda () (focus-mode)))
+#+end_src
+
+*** org-modern
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package org-modern
+      :init
+
+    (setq
+     ;; Edit settings
+     org-auto-align-tags nil
+     org-tags-column 0
+     org-catch-invisible-edits 'show-and-error
+     org-special-ctrl-a/e t
+     org-insert-heading-respect-content t
+
+     ;; Org styling, hide markup etc.
+     org-hide-emphasis-markers t
+     org-pretty-entities t
+     org-ellipsis "…"
+
+     ;; Agenda styling
+     org-agenda-tags-column 0
+     org-agenda-block-separator ?─
+     org-agenda-time-grid
+     '((daily today require-timed)
+       (800 1000 1200 1400 1600 1800 2000)
+       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+     org-agenda-current-time-string
+     "⭠ now ─────────────────────────────────────────────────")(setq
+     ;; Edit settings
+     org-auto-align-tags nil
+     org-tags-column 0
+     org-catch-invisible-edits 'show-and-error
+     org-special-ctrl-a/e t
+     org-insert-heading-respect-content t
+
+     ;; Org styling, hide markup etc.
+     org-hide-emphasis-markers t
+     org-pretty-entities t
+     org-ellipsis "…"
+
+     ;; Agenda styling
+     org-agenda-tags-column 0
+     org-agenda-block-separator ?─
+     org-agenda-time-grid
+     '((daily today require-timed)
+       (800 1000 1200 1400 1600 1800 2000)
+       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+     org-agenda-current-time-string
+     "⭠ now ─────────────────────────────────────────────────")
+    (global-org-modern-mode))
+
+  (modify-all-frames-parameters
+ '((right-divider-width . 1)
+   (internal-border-width . 40)))
+(dolist (face '(window-divider
+                window-divider-first-pixel
+                window-divider-last-pixel))
+  (face-spec-reset-face face)
+  (set-face-foreground face (face-attribute 'default :background)))
+(set-face-background 'fringe (face-attribute 'default :background))
+
+#+end_src
+
+*** hyperbole
+Hyopertextual button support for Emacs.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package hyperbole
+      :init
+    (hyperbole-mode 1))
+#+end_src
+
+*** org-remark
+Highlight text inside org files:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package org-remark
+      :config
+    (require 'org-remark-global-tracking)
+    (org-remark-global-tracking-mode +1))
+#+end_src
+
+*** tao-theme
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package tao-theme)
+#+end_src
 
