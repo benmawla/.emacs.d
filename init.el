@@ -81,9 +81,9 @@
   :hook
   (text-mode . mixed-pitch-mode))
 
-  (set-face-attribute 'default nil :font "JetBrains Mono-17")
-  (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono-17")
-  (set-face-attribute 'variable-pitch nil :font "JetBrains Mono-17")
+  (set-face-attribute 'default nil :font "Essential PragmataPro-17")
+  (set-face-attribute 'fixed-pitch nil :font "Essential PragmataPro-17")
+  (set-face-attribute 'variable-pitch nil :font "Essential PragmataPro-17")
 ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -727,10 +727,12 @@
   (org-remark-global-tracking-mode +1))
 
 (use-package tao-theme)
+
+(use-package org-roam-ui)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("52645403935dd6f8266c3a8f831949c1e79155324efdf709b5af0d078cd6c822" default)))
+   '("6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" default)))
