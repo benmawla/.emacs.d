@@ -99,15 +99,12 @@
 (require 'org-mouse)
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
+  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+)
 
 (setq org-hide-emphasis-markers t)
 
@@ -132,6 +129,8 @@
 ;; visual line mode
 
 (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
+
+(desktop-save-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org agenda files location
@@ -287,22 +286,6 @@
     :config
   (require 'which-key)
   (which-key-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org-roam
-
-(use-package org-roam
-    :ensure t
-    :custom
-    (org-roam-directory (file-truename "~/org/roam"))
-    :bind (("C-c n l" . org-roam-buffer-toggle)
-           ("C-c n f" . org-roam-node-find)
-           ("C-c n g" . org-roam-graph)
-           ("C-c n i" . org-roam-node-insert)
-           ("C-c n c" . org-roam-capture)
-           ("C-c n j" . org-roam-dailies-capture-today))
-    :config
-    (org-roam-setup))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; eglot
@@ -709,7 +692,7 @@
 
   (modify-all-frames-parameters
  '((right-divider-width . 1)
-   (internal-border-width . 40)))
+   (internal-border-width . 20)))
 (dolist (face '(window-divider
                 window-divider-first-pixel
                 window-divider-last-pixel))
@@ -719,7 +702,11 @@
 
 (use-package hyperbole
     :init
-  (hyperbole-mode 1))
+  (hyperbole-mode 1)
+  :config
+  (setq hbmap:dir-user "~/org/")
+  (setq hyrolo-date-format "%d-%m-%Y %H:%M:%S")
+  (setq hyrolo-file-list '("~/org/notes.org")))
 
 (use-package org-remark
     :config
@@ -727,12 +714,3 @@
   (org-remark-global-tracking-mode +1))
 
 (use-package tao-theme)
-
-(use-package org-roam-ui)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" default)))

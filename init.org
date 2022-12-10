@@ -243,6 +243,13 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
   (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
 #+end_src
 
+*** Desktop save mode
+Save previously opened buffers
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (desktop-save-mode 1)
+#+end_src
+
 *** Org agenda files location
 Set the location for agenda files:
 
@@ -502,27 +509,6 @@ sequence:
       :config
     (require 'which-key)
     (which-key-mode))
-#+end_src
-
-*** org-roam
-Org-based knowledge management system.
-
-#+begin_src lisp :tangle ~/.emacs.d/init.el
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; org-roam
-  
-  (use-package org-roam
-      :ensure t
-      :custom
-      (org-roam-directory (file-truename "~/org/roam"))
-      :bind (("C-c n l" . org-roam-buffer-toggle)
-             ("C-c n f" . org-roam-node-find)
-             ("C-c n g" . org-roam-graph)
-             ("C-c n i" . org-roam-node-insert)
-             ("C-c n c" . org-roam-capture)
-             ("C-c n j" . org-roam-dailies-capture-today))
-      :config
-      (org-roam-setup))
 #+end_src
 
 *** eglot
@@ -1085,7 +1071,7 @@ A REPL for rest-based requests.
 
   (modify-all-frames-parameters
  '((right-divider-width . 1)
-   (internal-border-width . 40)))
+   (internal-border-width . 20)))
 (dolist (face '(window-divider
                 window-divider-first-pixel
                 window-divider-last-pixel))
@@ -1101,8 +1087,12 @@ Hyopertextual button support for Emacs.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package hyperbole
       :init
-    (hyperbole-mode 1))
-#+end_src
+    (hyperbole-mode 1)
+    :config
+    (setq hbmap:dir-user "~/org/")
+    (setq hyrolo-date-format "%d-%m-%Y %H:%M:%S")
+    (setq hyrolo-file-list '("~/org/notes.org")))
+  #+end_src
 
 *** org-remark
 Highlight text inside org files:
@@ -1118,12 +1108,5 @@ Highlight text inside org files:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package tao-theme)
-#+end_src
-
-*** org-roam-ui
-A mode that visualises org roam:
-
-#+begin_src lisp :tangle ~/.emacs.d/init.el
-  (use-package org-roam-ui)
 #+end_src
 
