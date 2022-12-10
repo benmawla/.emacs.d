@@ -332,7 +332,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 #+end_src
 
 *** ox-hugo
-~ox-hugo~ provides org export support for Hugo-compatible markdown (it
+~oxhugo~ provides org export support for Hugo-compatible markdown (it
 powers this blog).
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
@@ -355,7 +355,7 @@ for ease-of-access:
 
   (use-package magit
       :config
-    (global-set-key (kbd "C-x m") (lambda () (interactive) (split-window-right) (other-window-prefix) (magit-status))))
+    (global-set-key (kbd "C-x m") (lambda () (interactive) (split-window-right) (other-window-prefix) (magit-status) (setq unread-command-events (listify-key-sequence "$")))))
 #+end_src
 
 *** avy
