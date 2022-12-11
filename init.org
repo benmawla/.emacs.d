@@ -517,8 +517,9 @@ An LSP client... tries to match a locally-installed LSP with the current buffer:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; eglot
-  
-  (use-package eglot)
+
+  (use-package eglot
+      :bind (("C--" . eglot-format-buffer)))
 #+end_src
 
 *** expand-region
@@ -1102,11 +1103,5 @@ Highlight text inside org files:
       :config
     (require 'org-remark-global-tracking)
     (org-remark-global-tracking-mode +1))
-#+end_src
-
-*** tao-theme
-
-#+begin_src lisp :tangle ~/.emacs.d/init.el
-  (use-package tao-theme)
 #+end_src
 

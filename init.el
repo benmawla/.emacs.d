@@ -290,7 +290,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; eglot
 
-(use-package eglot)
+(use-package eglot
+    :bind (("C--" . eglot-format-buffer)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; expand-region
@@ -712,5 +713,3 @@
     :config
   (require 'org-remark-global-tracking)
   (org-remark-global-tracking-mode +1))
-
-(use-package tao-theme)
