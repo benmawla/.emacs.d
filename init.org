@@ -1105,3 +1105,13 @@ Highlight text inside org files:
     (org-remark-global-tracking-mode +1))
 #+end_src
 
+
+*** web-mode
+Webmode for editing html and heex files:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+      (use-package web-mode
+          :init
+        (add-to-list 'auto-mode-alist '("\\.[lh]?eex\\'" . web-mode)))
+#+end_src
+

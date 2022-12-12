@@ -99,12 +99,15 @@
 (require 'org-mouse)
 
 (custom-set-faces
-  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
-  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-)
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
 
 (setq org-hide-emphasis-markers t)
 
@@ -713,3 +716,14 @@
     :config
   (require 'org-remark-global-tracking)
   (org-remark-global-tracking-mode +1))
+
+(use-package web-mode
+    :init
+  (add-to-list 'auto-mode-alist '("\\.[lh]?eex\\'" . web-mode)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("3c93094d214c034a89ed81a4bba720a23b090f38f7923a442c879c2bd4dcce5b" "d50da51d7dc41c7fc1ce9409a74fd7661540dc4bf54ef55148e59a7763318112" "6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" default)))
