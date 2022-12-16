@@ -143,9 +143,9 @@ Set the default font size and face.
     :hook
     (text-mode . mixed-pitch-mode))
 
-    (set-face-attribute 'default nil :font "Essential PragmataPro-17")
-    (set-face-attribute 'fixed-pitch nil :font "Essential PragmataPro-17")
-    (set-face-attribute 'variable-pitch nil :font "Essential PragmataPro-17")
+    (set-face-attribute 'default nil :font "Berkeley Mono-17")
+    (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-17")
+    (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-17")
   ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
@@ -453,7 +453,7 @@ Provides rich descriptions next to minibuffer completions.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (global-set-key (kbd "C-q") nil)
-  (global-set-key (kbd "C-c g") 'counsel-git-grep)
+  ;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
   (global-set-key (kbd "M-SPC") 'counsel-git)
   (global-set-key (kbd "C-SPC") 'switch-to-buffer)
   (global-set-key (kbd "C-x b") nil)
@@ -1115,3 +1115,11 @@ Webmode for editing html and heex files:
         (add-to-list 'auto-mode-alist '("\\.[lh]?eex\\'" . web-mode)))
 #+end_src
 
+*** ripgrep
+A client/Emacs interface for ripgrep:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package rg
+      :bind ("C-c g" . rg-dwim)
+      ("C-x g" . rg-menu))
+#+end_src

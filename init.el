@@ -81,9 +81,9 @@
   :hook
   (text-mode . mixed-pitch-mode))
 
-  (set-face-attribute 'default nil :font "Essential PragmataPro-17")
-  (set-face-attribute 'fixed-pitch nil :font "Essential PragmataPro-17")
-  (set-face-attribute 'variable-pitch nil :font "Essential PragmataPro-17")
+  (set-face-attribute 'default nil :font "Berkeley Mono-17")
+  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-17")
+  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-17")
 ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -99,15 +99,12 @@
 (require 'org-mouse)
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
+  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+)
 
 (setq org-hide-emphasis-markers t)
 
@@ -252,7 +249,7 @@
 (use-package counsel)
 
 (global-set-key (kbd "C-q") nil)
-(global-set-key (kbd "C-c g") 'counsel-git-grep)
+;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
 (global-set-key (kbd "M-SPC") 'counsel-git)
 (global-set-key (kbd "C-SPC") 'switch-to-buffer)
 (global-set-key (kbd "C-x b") nil)
@@ -720,10 +717,7 @@
 (use-package web-mode
     :init
   (add-to-list 'auto-mode-alist '("\\.[lh]?eex\\'" . web-mode)))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("3c93094d214c034a89ed81a4bba720a23b090f38f7923a442c879c2bd4dcce5b" "d50da51d7dc41c7fc1ce9409a74fd7661540dc4bf54ef55148e59a7763318112" "6a4ec7c23828609753b252d3fa543f153ddd0852a0f724ec31b5f579458c54f0" default)))
+
+(use-package rg
+    :bind ("C-c g" . rg-dwim)
+    ("C-x g" . rg-menu))
