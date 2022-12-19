@@ -335,7 +335,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; ef-themes
 
-  (use-package ef-themes :config (load-theme 'ef-light))
+  ;;(use-package ef-themes :config (load-theme 'ef-light))
 #+end_src
 
 *** ox-hugo
@@ -376,7 +376,7 @@ navigation. ~C-;~ is bound to ~avy-goto-char~:
 
   (use-package avy
       :config
-    (global-set-key (kbd "C-;") 'avy-goto-char)
+    ;; (global-set-key (kbd "C-;") 'avy-goto-char)
     (global-set-key (kbd "C-l") 'avy-goto-line))
 #+end_src
 
@@ -1014,12 +1014,6 @@ A REPL for rest-based requests.
             (require 'restclient))
 #+end_src
 
-*** focus
-#+begin_src lisp :tangle ~/.emacs.d/init.el
-  (use-package focus)
-  (add-hook 'org-mode-hook (lambda () (focus-mode)))
-#+end_src
-
 *** org-modern
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package org-modern
@@ -1105,7 +1099,6 @@ Highlight text inside org files:
     (org-remark-global-tracking-mode +1))
 #+end_src
 
-
 *** web-mode
 Webmode for editing html and heex files:
 
@@ -1120,6 +1113,41 @@ A client/Emacs interface for ripgrep:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package rg
-      :bind ("C-c g" . rg-dwim)
-      ("C-x g" . rg-menu))
+      :bind ("C-;" . rg-dwim)
+      ("C-x g" . rg))
+#+end_src
+
+*** modus-themes v4
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (add-to-list 'load-path "~/.emacs.d/modus-themes")
+  (require 'modus-themes)
+  (load-theme 'modus-operandi-tinted)
+#+end_src
+
+*** focus
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package focus)
+#+end_src
+
+*** denote
+A note taking package built by Prot.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+      (use-package denote
+          :config
+        (setq denote-directory (expand-file-name "~/org/denote/")))
+#+end_src
+
+*** nov-xwidget
+Read epub documents inside Emacs:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package nov)
+
+  (use-package nov-xwidget
+      :demand t
+      :after nov
+      :config
+      (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
+      (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
 #+end_src

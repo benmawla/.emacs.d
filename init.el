@@ -99,12 +99,15 @@
 (require 'org-mouse)
 
 (custom-set-faces
-  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
-  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-)
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
 
 (setq org-hide-emphasis-markers t)
 
@@ -172,7 +175,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ef-themes
 
-(use-package ef-themes :config (load-theme 'ef-light))
+;;(use-package ef-themes :config (load-theme 'ef-light))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ox-hugo
@@ -194,7 +197,7 @@
 
 (use-package avy
     :config
-  (global-set-key (kbd "C-;") 'avy-goto-char)
+  ;; (global-set-key (kbd "C-;") 'avy-goto-char)
   (global-set-key (kbd "C-l") 'avy-goto-line))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -640,9 +643,6 @@
     :init
   (require 'restclient))
 
-(use-package focus)
-(add-hook 'org-mode-hook (lambda () (focus-mode)))
-
 (use-package org-modern
       :init
 
@@ -719,5 +719,31 @@
   (add-to-list 'auto-mode-alist '("\\.[lh]?eex\\'" . web-mode)))
 
 (use-package rg
-    :bind ("C-c g" . rg-dwim)
-    ("C-x g" . rg-menu))
+    :bind ("C-;" . rg-dwim)
+    ("C-x g" . rg))
+
+(add-to-list 'load-path "~/.emacs.d/modus-themes")
+(require 'modus-themes)
+(load-theme 'modus-operandi-tinted)
+
+(use-package focus)
+
+(use-package denote
+    :config
+  (setq denote-directory (expand-file-name "~/org/denote/")))
+
+(use-package nov)
+
+(use-package nov-xwidget
+    :demand t
+    :after nov
+    :config
+    (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
+    (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("0eaa2988c145281bc904b673c9b6e27f560b63c4f6aed97705c2a4945e3aa0cb" "e7ff5dfa15b78e2ff6fc82c8f5e24285f091f5fd118296a467dabacb7d71f552" default)))
