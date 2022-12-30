@@ -1114,7 +1114,7 @@ A client/Emacs interface for ripgrep:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package rg
       :bind ("C-;" . rg-dwim)
-      ("C-x g" . rg))
+      ("C-c g" . rg))
 #+end_src
 
 *** modus-themes v4
@@ -1150,4 +1150,8 @@ Read epub documents inside Emacs:
       :config
       (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
       (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+#+end_src
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+    (global-set-key (kbd "C-8") (lambda () (interactive) (shell-command "cd ~/Developer/muna && mix format")))
 #+end_src
