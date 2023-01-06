@@ -1150,3 +1150,7 @@ Read epub documents inside Emacs:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package bufler)
 #+end_src
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+    (global-set-key (kbd "C-8") (lambda () (interactive) (shell-command "cd ~/Developer/muna && mix format")))
+#+end_src

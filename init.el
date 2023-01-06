@@ -731,4 +731,13 @@
 
 (use-package nov)
 
+(use-package nov-xwidget
+    :demand t
+    :after nov
+    :config
+    (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
+    (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+
+(global-set-key (kbd "C-8") (lambda () (interactive) (shell-command "cd ~/Developer/muna && mix format")))
+
 (use-package bufler)
