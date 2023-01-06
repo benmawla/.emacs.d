@@ -455,7 +455,7 @@ Provides rich descriptions next to minibuffer completions.
   (global-set-key (kbd "C-q") nil)
   ;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
   (global-set-key (kbd "M-SPC") 'counsel-git)
-  (global-set-key (kbd "C-SPC") 'switch-to-buffer)
+  (global-set-key (kbd "C-SPC") 'ibuffer-jump)
   (global-set-key (kbd "C-x b") nil)
 #+end_src
 
@@ -1114,7 +1114,7 @@ A client/Emacs interface for ripgrep:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package rg
       :bind ("C-;" . rg-dwim)
-      ("C-x g" . rg))
+      ("C-c g" . rg))
 #+end_src
 
 *** modus-themes v4
@@ -1143,11 +1143,10 @@ Read epub documents inside Emacs:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package nov)
+#+end_src
 
-  (use-package nov-xwidget
-      :demand t
-      :after nov
-      :config
-      (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
-      (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+*** bufler
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package bufler)
 #+end_src
