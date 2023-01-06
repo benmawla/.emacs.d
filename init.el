@@ -251,7 +251,7 @@
 (global-set-key (kbd "C-q") nil)
 ;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
 (global-set-key (kbd "M-SPC") 'counsel-git)
-(global-set-key (kbd "C-SPC") 'switch-to-buffer)
+(global-set-key (kbd "C-SPC") 'ibuffer-jump)
 (global-set-key (kbd "C-x b") nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -739,3 +739,5 @@
     (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
 
 (global-set-key (kbd "C-8") (lambda () (interactive) (shell-command "cd ~/Developer/muna && mix format")))
+
+(use-package bufler)
