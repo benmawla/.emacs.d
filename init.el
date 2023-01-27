@@ -194,7 +194,7 @@
 
 (use-package avy
     :config
-  ;; (global-set-key (kbd "C-;") 'avy-goto-char)
+  (global-set-key (kbd "C-;") 'avy-goto-char)
   (global-set-key (kbd "C-l") 'avy-goto-line))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -329,7 +329,7 @@
  '("8" . meow-digit-argument)
  '("9" . meow-digit-argument)
  '("0" . meow-digit-argument)
- '("/" . meow-keypad-describe-key)
+ ;; '("/" . meow-keypad-describe-key)
  '("?" . meow-cheatsheet))
 (meow-normal-define-key
  '("0" . meow-expand-0)
@@ -350,7 +350,7 @@
  ;;'("[" . meow-beginning-of-thing)
  ;;'("]" . meow-end-of-thing)
  '("a" . meow-append)
- '("A" . meow-open-below)
+ '("A" . move-end-of-line)
  '("b" . meow-back-word)
  '("B" . meow-back-symbol)
  '("c" . meow-change)
@@ -364,7 +364,7 @@
  '("h" . meow-left)
  '("H" . meow-left-expand)
  '("i" . meow-insert)
- '("I" . meow-open-above)
+ '("I" . move-beginning-of-line)
  '("j" . meow-next)
  '("J" . meow-next-expand)
  '("k" . meow-prev)
@@ -385,7 +385,7 @@
  '("t" . meow-till)
  '("u" . meow-undo)
  '("U" . meow-undo-in-selection)
- '("/" . meow-bounds-of-thing)
+ ;; '("/" . meow-bounds-of-thing)
  '("e" . meow-mark-word)
  '("E" . meow-mark-symbol)
  '("v" . meow-line)
@@ -716,12 +716,12 @@
   (add-to-list 'auto-mode-alist '("\\.[lh]?eex\\'" . web-mode)))
 
 (use-package rg
-    :bind ("C-;" . rg-dwim)
+    :bind ("C-=" . rg-dwim)
     ("C-c g" . rg))
 
 (add-to-list 'load-path "~/.emacs.d/modus-themes")
 (require 'modus-themes)
-(load-theme 'modus-operandi-tinted)
+(load-theme 'modus-operandi)
 
 (use-package focus)
 
@@ -741,3 +741,15 @@
 (global-set-key (kbd "C-8") (lambda () (interactive) (shell-command "cd ~/Developer/muna && mix format")))
 
 (use-package bufler)
+
+(use-package vterm
+  :ensure t)
+
+(use-package substitute)
+
+;; If you like visual feedback on the matching target.  Default is nil.
+(setq substitute-highlight t)
+
+;; If you want a message reporting the matches that changed in the
+;; given context.  We don't do it by default.
+(add-hook 'substitute-post-replace-hook #'substitute-report-operation)

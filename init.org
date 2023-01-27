@@ -376,7 +376,7 @@ navigation. ~C-;~ is bound to ~avy-goto-char~:
 
   (use-package avy
       :config
-    ;; (global-set-key (kbd "C-;") 'avy-goto-char)
+    (global-set-key (kbd "C-;") 'avy-goto-char)
     (global-set-key (kbd "C-l") 'avy-goto-line))
 #+end_src
 
@@ -595,7 +595,7 @@ A modal editor.
    '("8" . meow-digit-argument)
    '("9" . meow-digit-argument)
    '("0" . meow-digit-argument)
-   '("/" . meow-keypad-describe-key)
+   ;; '("/" . meow-keypad-describe-key)
    '("?" . meow-cheatsheet))
   (meow-normal-define-key
    '("0" . meow-expand-0)
@@ -616,7 +616,7 @@ A modal editor.
    ;;'("[" . meow-beginning-of-thing)
    ;;'("]" . meow-end-of-thing)
    '("a" . meow-append)
-   '("A" . meow-open-below)
+   '("A" . move-end-of-line)
    '("b" . meow-back-word)
    '("B" . meow-back-symbol)
    '("c" . meow-change)
@@ -630,7 +630,7 @@ A modal editor.
    '("h" . meow-left)
    '("H" . meow-left-expand)
    '("i" . meow-insert)
-   '("I" . meow-open-above)
+   '("I" . move-beginning-of-line)
    '("j" . meow-next)
    '("J" . meow-next-expand)
    '("k" . meow-prev)
@@ -651,7 +651,7 @@ A modal editor.
    '("t" . meow-till)
    '("u" . meow-undo)
    '("U" . meow-undo-in-selection)
-   '("/" . meow-bounds-of-thing)
+   ;; '("/" . meow-bounds-of-thing)
    '("e" . meow-mark-word)
    '("E" . meow-mark-symbol)
    '("v" . meow-line)
@@ -1113,7 +1113,7 @@ A client/Emacs interface for ripgrep:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package rg
-      :bind ("C-;" . rg-dwim)
+      :bind ("C-=" . rg-dwim)
       ("C-c g" . rg))
 #+end_src
 
@@ -1121,7 +1121,7 @@ A client/Emacs interface for ripgrep:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (add-to-list 'load-path "~/.emacs.d/modus-themes")
   (require 'modus-themes)
-  (load-theme 'modus-operandi-tinted)
+  (load-theme 'modus-operandi)
 #+end_src
 
 *** focus
@@ -1154,3 +1154,26 @@ Read epub documents inside Emacs:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
     (global-set-key (kbd "C-8") (lambda () (interactive) (shell-command "cd ~/Developer/muna && mix format")))
 #+end_src
+
+*** vterm
+Better terminal emulation:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package vterm
+    :ensure t)
+#+end_src
+
+*** substitute
+Smart text substitutions, a package by Prot.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package substitute)
+
+  ;; If you like visual feedback on the matching target.  Default is nil.
+  (setq substitute-highlight t)
+
+  ;; If you want a message reporting the matches that changed in the
+  ;; given context.  We don't do it by default.
+  (add-hook 'substitute-post-replace-hook #'substitute-report-operation)
+#+end_src
+
