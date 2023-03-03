@@ -36,7 +36,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; display
 
-(setq inhibit-startup-message t)
+;; (setq inhibit-startup-message t)
 (scroll-bar-mode -1)	 
 (tool-bar-mode -1)	 
 (menu-bar-mode -1)
@@ -47,27 +47,27 @@
       (bootstrap-version 6))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
 ;; Make a clean & minimalist frame
-(use-package frame
-    :straight (:type built-in)
-    :config
-    (setq-default default-frame-alist
-                  (append (list
-                           '(internal-border-width . 0)
-                           '(left-fringe    . 0)
-                           '(right-fringe   . 0)
-                           '(tool-bar-lines . 0)
-                           '(menu-bar-lines . 0)
-                           '(vertical-scroll-bars . nil))))
-    (setq-default window-resize-pixelwise t)
-    (setq-default frame-resize-pixelwise t))
+;; (use-package frame
+;;     :straight (:type built-in)
+;;     :config
+;;     (setq-default default-frame-alist
+;;                   (append (list
+;;                            '(internal-border-width . 0)
+;;                            '(left-fringe    . 0)
+;;                            '(right-fringe   . 0)
+;;                            '(tool-bar-lines . 0)
+;;                            '(menu-bar-lines . 0)
+;;                            '(vertical-scroll-bars . nil))))
+;;     (setq-default window-resize-pixelwise t)
+;;     (setq-default frame-resize-pixelwise t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; meta key
@@ -81,9 +81,9 @@
   :hook
   (text-mode . mixed-pitch-mode))
 
-  (set-face-attribute 'default nil :font "Berkeley Mono-17")
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-17")
-  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-17")
+  (set-face-attribute 'default nil :font "Berkeley Mono-15")
+  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-15")
+  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-15")
 ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -133,7 +133,7 @@
 
 (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
 
-(desktop-save-mode 1)
+;;(desktop-save-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org agenda files location
@@ -148,14 +148,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; save place
 
-(save-place-mode 1)
+;;(save-place-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; allow hash key entry on macOS
 
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 
-(setq initial-buffer-choice "~/org/learn/self.org")
+;; (setq initial-buffer-choice "~/org/learn/self.org")
 
 (global-set-key (kbd "M-s") 'save-some-buffers)
 
@@ -254,7 +254,7 @@
 (global-set-key (kbd "C-q") nil)
 ;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
 (global-set-key (kbd "M-SPC") 'counsel-git)
-(global-set-key (kbd "C-SPC") 'ibuffer-jump)
+;; (global-set-key (kbd "C-SPC") 'ibuffer-jump)
 (global-set-key (kbd "C-x b") nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -589,9 +589,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; savehist
 
-(use-package savehist
-    :init
-  (savehist-mode))
+;; (use-package savehist
+;;     :init
+;;   (savehist-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; elixir-mode
@@ -644,62 +644,52 @@
   (require 'restclient))
 
 (use-package org-modern
-      :init
+    :init
 
-    (setq
-     ;; Edit settings
-     org-auto-align-tags nil
-     org-tags-column 0
-     org-catch-invisible-edits 'show-and-error
-     org-special-ctrl-a/e t
-     org-insert-heading-respect-content t
+  (setq
+   ;; Edit settings
+   org-auto-align-tags nil
+   org-tags-column 0
+   org-catch-invisible-edits 'show-and-error
+   org-special-ctrl-a/e t
+   org-insert-heading-respect-content t
 
-     ;; Org styling, hide markup etc.
-     org-hide-emphasis-markers t
-     org-pretty-entities t
-     org-ellipsis "…"
+   ;; Org styling, hide markup etc.
+   org-hide-emphasis-markers t
+   org-pretty-entities t
+   org-ellipsis "…"
 
-     ;; Agenda styling
-     org-agenda-tags-column 0
-     org-agenda-block-separator ?─
-     org-agenda-time-grid
-     '((daily today require-timed)
-       (800 1000 1200 1400 1600 1800 2000)
-       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-     org-agenda-current-time-string
-     "⭠ now ─────────────────────────────────────────────────")(setq
-     ;; Edit settings
-     org-auto-align-tags nil
-     org-tags-column 0
-     org-catch-invisible-edits 'show-and-error
-     org-special-ctrl-a/e t
-     org-insert-heading-respect-content t
+   ;; Agenda styling
+   org-agenda-tags-column 0
+   org-agenda-block-separator ?─
+   org-agenda-time-grid
+   '((daily today require-timed)
+     (800 1000 1200 1400 1600 1800 2000)
+     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+   org-agenda-current-time-string
+   "⭠ now ─────────────────────────────────────────────────")(setq
+   ;; Edit settings
+   org-auto-align-tags nil
+   org-tags-column 0
+   org-catch-invisible-edits 'show-and-error
+   org-special-ctrl-a/e t
+   org-insert-heading-respect-content t
 
-     ;; Org styling, hide markup etc.
-     org-hide-emphasis-markers t
-     org-pretty-entities t
-     org-ellipsis "…"
+   ;; Org styling, hide markup etc.
+   org-hide-emphasis-markers t
+   org-pretty-entities t
+   org-ellipsis "…"
 
-     ;; Agenda styling
-     org-agenda-tags-column 0
-     org-agenda-block-separator ?─
-     org-agenda-time-grid
-     '((daily today require-timed)
-       (800 1000 1200 1400 1600 1800 2000)
-       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-     org-agenda-current-time-string
-     "⭠ now ─────────────────────────────────────────────────")
-    (global-org-modern-mode))
-
-  (modify-all-frames-parameters
- '((right-divider-width . 1)
-   (internal-border-width . 20)))
-(dolist (face '(window-divider
-                window-divider-first-pixel
-                window-divider-last-pixel))
-  (face-spec-reset-face face)
-  (set-face-foreground face (face-attribute 'default :background)))
-(set-face-background 'fringe (face-attribute 'default :background))
+   ;; Agenda styling
+   org-agenda-tags-column 0
+   org-agenda-block-separator ?─
+   org-agenda-time-grid
+   '((daily today require-timed)
+     (800 1000 1200 1400 1600 1800 2000)
+     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+   org-agenda-current-time-string
+   "⭠ now ─────────────────────────────────────────────────")
+  (global-org-modern-mode))
 
 (use-package hyperbole
     :init
@@ -734,16 +724,9 @@
 
 (use-package nov)
 
-(use-package nov-xwidget
-    :demand t
-    :after nov
-    :config
-    (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
-    (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+(use-package bufler)
 
 (global-set-key (kbd "C-8") (lambda () (interactive) (shell-command "cd ~/Developer/muna && mix format")))
-
-(use-package bufler)
 
 (use-package vterm
   :ensure t)
@@ -756,10 +739,15 @@
 ;; If you want a message reporting the matches that changed in the
 ;; given context.  We don't do it by default.
 (add-hook 'substitute-post-replace-hook #'substitute-report-operation)
+
+(use-package beframe
+    :init (beframe-mode))
+
+(global-set-key (kbd "C-SPC") 'beframe-buffer-menu)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e1ecde3da50a2b5b0175adaae0a45cc1a6b0a1056777e9702c6925f40bc22641" default)))
+   '("e1ecde3da50a2b5b0175adaae0a45cc1a6b0a1056777e9702c6925f40bc22641" "8b930a6af47e826c12be96de5c28f1d142dccab1927f196589dafffad0fc9652" default)))

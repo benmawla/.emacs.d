@@ -83,8 +83,8 @@ bar and menu bar).
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; display
-  
-  (setq inhibit-startup-message t)
+
+  ;; (setq inhibit-startup-message t)
   (scroll-bar-mode -1)	 
   (tool-bar-mode -1)	 
   (menu-bar-mode -1)	 
@@ -94,31 +94,31 @@ bar and menu bar).
 
   (defvar bootstrap-version)
   (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 6))
+	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	(bootstrap-version 6))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
+	  (url-retrieve-synchronously
+	   "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	   'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
 
   ;; Make a clean & minimalist frame
-  (use-package frame
-      :straight (:type built-in)
-      :config
-      (setq-default default-frame-alist
-                    (append (list
-                             '(internal-border-width . 0)
-                             '(left-fringe    . 0)
-                             '(right-fringe   . 0)
-                             '(tool-bar-lines . 0)
-                             '(menu-bar-lines . 0)
-                             '(vertical-scroll-bars . nil))))
-      (setq-default window-resize-pixelwise t)
-      (setq-default frame-resize-pixelwise t))
+  ;; (use-package frame
+  ;;     :straight (:type built-in)
+  ;;     :config
+  ;;     (setq-default default-frame-alist
+  ;;                   (append (list
+  ;;                            '(internal-border-width . 0)
+  ;;                            '(left-fringe    . 0)
+  ;;                            '(right-fringe   . 0)
+  ;;                            '(tool-bar-lines . 0)
+  ;;                            '(menu-bar-lines . 0)
+  ;;                            '(vertical-scroll-bars . nil))))
+  ;;     (setq-default window-resize-pixelwise t)
+  ;;     (setq-default frame-resize-pixelwise t))
  #+end_src
 
 *** Meta key
@@ -143,9 +143,9 @@ Set the default font size and face.
     :hook
     (text-mode . mixed-pitch-mode))
 
-    (set-face-attribute 'default nil :font "Berkeley Mono-17")
-    (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-17")
-    (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-17")
+    (set-face-attribute 'default nil :font "Berkeley Mono-15")
+    (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-15")
+    (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-15")
   ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
@@ -247,7 +247,7 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
 Save previously opened buffers
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (desktop-save-mode 1)
+  ;;(desktop-save-mode 1)
 #+end_src
 
 *** Org agenda files location
@@ -278,7 +278,7 @@ Persist cursor locations across sessions.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; save place
 
-  (save-place-mode 1)
+  ;;(save-place-mode 1)
 #+end_src
 
 *** Allow hash key entry on macOS
@@ -292,7 +292,7 @@ Persist cursor locations across sessions.
 *** Change the default scratch message
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (setq initial-buffer-choice "~/org/learn/self.org")
+  ;; (setq initial-buffer-choice "~/org/learn/self.org")
 #+end_src
 
 *** Save file with CMD-S
@@ -455,7 +455,7 @@ Provides rich descriptions next to minibuffer completions.
   (global-set-key (kbd "C-q") nil)
   ;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
   (global-set-key (kbd "M-SPC") 'counsel-git)
-  (global-set-key (kbd "C-SPC") 'ibuffer-jump)
+  ;; (global-set-key (kbd "C-SPC") 'ibuffer-jump)
   (global-set-key (kbd "C-x b") nil)
 #+end_src
 
@@ -894,9 +894,9 @@ Persist minibuffer history across Emacs sessions:
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; savehist
 
-  (use-package savehist
-      :init
-    (savehist-mode))
+  ;; (use-package savehist
+  ;;     :init
+  ;;   (savehist-mode))
 #+end_src
 
 *** elixir-mode
@@ -1064,15 +1064,6 @@ A REPL for rest-based requests.
      "⭠ now ─────────────────────────────────────────────────")
     (global-org-modern-mode))
 
-  (modify-all-frames-parameters
- '((right-divider-width . 1)
-   (internal-border-width . 20)))
-(dolist (face '(window-divider
-                window-divider-first-pixel
-                window-divider-last-pixel))
-  (face-spec-reset-face face)
-  (set-face-foreground face (face-attribute 'default :background)))
-(set-face-background 'fringe (face-attribute 'default :background))
 
 #+end_src
 
@@ -1176,4 +1167,17 @@ Smart text substitutions, a package by Prot.
   ;; given context.  We don't do it by default.
   (add-hook 'substitute-post-replace-hook #'substitute-report-operation)
 #+end_src
+
+*** beframe
+
+Frame management package by Prot
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package beframe
+      :init (beframe-mode))
+
+  (global-set-key (kbd "C-SPC") 'beframe-buffer-menu)
+#+end_src
+
+
 
