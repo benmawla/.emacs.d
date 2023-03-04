@@ -744,10 +744,12 @@
     :init (beframe-mode))
 
 (global-set-key (kbd "C-SPC") 'beframe-buffer-menu)
+
+(electric-pair-mode)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("e1ecde3da50a2b5b0175adaae0a45cc1a6b0a1056777e9702c6925f40bc22641" "8b930a6af47e826c12be96de5c28f1d142dccab1927f196589dafffad0fc9652" default)))
+   '("e1ecde3da50a2b5b0175adaae0a45cc1a6b0a1056777e9702c6925f40bc22641" default)))

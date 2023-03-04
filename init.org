@@ -1179,5 +1179,13 @@ Frame management package by Prot
   (global-set-key (kbd "C-SPC") 'beframe-buffer-menu)
 #+end_src
 
+*** electric-pair-mode
+
+Enable `electric-pair-mode` globally:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (electric-pair-mode)
+#+end_src
+
 
 
