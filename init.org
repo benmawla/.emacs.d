@@ -145,8 +145,8 @@ Set the default font size and face.
 
     (set-face-attribute 'default nil :font "Berkeley Mono-17")
     (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-17")
-    (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-17")
-  ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
+    (set-face-attribute 'variable-pitch nil :font "Source Serif Pro-17")
+   (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
 *** Open this file
@@ -1121,7 +1121,7 @@ A client/Emacs interface for ripgrep:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (add-to-list 'load-path "~/.emacs.d/modus-themes")
   (require 'modus-themes)
-  (load-theme 'modus-operandi-tinted)
+  (load-theme 'modus-operandi)
 #+end_src
 
 *** focus

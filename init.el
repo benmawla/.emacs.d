@@ -75,16 +75,16 @@
 (setq mac-command-modifier 'meta)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; font
+ ;; font
 
-  (use-package mixed-pitch
-  :hook
-  (text-mode . mixed-pitch-mode))
+ (use-package mixed-pitch
+ :hook
+ (text-mode . mixed-pitch-mode))
 
-  (set-face-attribute 'default nil :font "Berkeley Mono-17")
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-17")
-  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-17")
-;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
+ (set-face-attribute 'default nil :font "Berkeley Mono-17")
+ (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-17")
+ (set-face-attribute 'variable-pitch nil :font "Castoro-17")
+(add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; open this file
@@ -99,12 +99,15 @@
 (require 'org-mouse)
 
 (custom-set-faces
-  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
-  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-)
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
 
 (setq org-hide-emphasis-markers t)
 
@@ -721,7 +724,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/modus-themes")
 (require 'modus-themes)
-(load-theme 'modus-operandi-tinted)
+(load-theme 'modus-operandi)
 
 (use-package focus)
 
@@ -731,13 +734,13 @@
 
 (use-package nov)
 
-(use-package nov-xwidget
-    :demand t
-    :after nov
-    :config
-    (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
-    (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+(use-package bufler)
 
 (global-set-key (kbd "C-8") (lambda () (interactive) (shell-command "cd ~/Developer/muna && mix format")))
-
-(use-package bufler)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("3c93094d214c034a89ed81a4bba720a23b090f38f7923a442c879c2bd4dcce5b" "d252b812c27336226a74ebc0960c1ccb7f95e58a0930e2bbe58b9516df5d82d5" "e7ff5dfa15b78e2ff6fc82c8f5e24285f091f5fd118296a467dabacb7d71f552" "d3b9f27276abfc73d2d06996b47dd410fc47fa50ed2bfcfdb354a1c3c9d180c4" default)))
