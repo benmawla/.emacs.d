@@ -75,16 +75,16 @@
 (setq mac-command-modifier 'meta)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; font
+ ;; font
 
-  (use-package mixed-pitch
-  :hook
-  (text-mode . mixed-pitch-mode))
+ (use-package mixed-pitch
+ :hook
+ (text-mode . mixed-pitch-mode))
 
   (set-face-attribute 'default nil :font "Berkeley Mono-15")
   (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-15")
   (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-15")
-;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; open this file
@@ -746,10 +746,3 @@
 (global-set-key (kbd "C-SPC") 'beframe-buffer-menu)
 
 (electric-pair-mode)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("e1ecde3da50a2b5b0175adaae0a45cc1a6b0a1056777e9702c6925f40bc22641" default)))
