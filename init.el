@@ -81,10 +81,11 @@
  :hook
  (text-mode . mixed-pitch-mode))
 
-  (set-face-attribute 'default nil :font "Berkeley Mono-15")
-  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-15")
-  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-15")
-  (add-hook 'org-mode-hook 'variable-pitch-mode)
+
+  (set-face-attribute 'default nil :font "Zed Mono-15")
+  (set-face-attribute 'fixed-pitch nil :font "Zed Mono-15")
+  (set-face-attribute 'variable-pitch nil :font "Zed Mono-15")
+;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; open this file
@@ -99,15 +100,12 @@
 (require 'org-mouse)
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
- '(org-level-5 ((t (:inherit outline-5 :height 1.0)))))
+  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+)
 
 (setq org-hide-emphasis-markers t)
 
@@ -136,7 +134,7 @@
 ;;(desktop-save-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org agenda files location
+;; org agenda location
 
 (setq org-agenda-files '("~/org/task.org"))
 
@@ -176,6 +174,8 @@
 ;; ef-themes
 
 ;;(use-package ef-themes :config (load-theme 'ef-light))
+(setq ef-themes-region '(intense no-extend neutral))
+(mapc #'disable-theme custom-enabled-themes)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ox-hugo
@@ -253,7 +253,7 @@
 
 (global-set-key (kbd "C-q") nil)
 ;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
-(global-set-key (kbd "M-SPC") 'counsel-git)
+(global-set-key (kbd "C-SPC") 'counsel-git)
 ;; (global-set-key (kbd "C-SPC") 'ibuffer-jump)
 (global-set-key (kbd "C-x b") nil)
 
@@ -413,7 +413,7 @@
   (require 'meow)
   (meow-setup)
   (meow-global-mode 1)
-  (setq meow-expand-hint-remove-delay 2.0)
+  (setq meow-expand-hint-remove-delay 60.0)
   (meow-setup-indicator))
 
 (meow-thing-register 'tag '(pair ("<") (">")) '(pair ("<") (">")))
@@ -714,7 +714,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/modus-themes")
 (require 'modus-themes)
-(load-theme 'modus-operandi)
+(load-theme 'ef-light)
 
 (use-package focus)
 
@@ -743,6 +743,6 @@
 (use-package beframe
     :init (beframe-mode))
 
-(global-set-key (kbd "C-SPC") 'beframe-buffer-menu)
+(global-set-key (kbd "S-SPC") 'beframe-buffer-menu)
 
 (electric-pair-mode)

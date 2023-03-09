@@ -142,11 +142,19 @@ Set the default font size and face.
     (use-package mixed-pitch
     :hook
     (text-mode . mixed-pitch-mode))
+<<<<<<< HEAD
     
     (set-face-attribute 'default nil :font "Berkeley Mono-15")
     (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-15")
     (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-15")
     (add-hook 'org-mode-hook 'variable-pitch-mode)
+=======
+
+    (set-face-attribute 'default nil :font "Zed Mono-15")
+    (set-face-attribute 'fixed-pitch nil :font "Zed Mono-15")
+    (set-face-attribute 'variable-pitch nil :font "Zed Mono-15")
+  ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
+>>>>>>> 5485d4c (Various modifications)
 #+end_src
 
 *** Open this file
@@ -255,7 +263,7 @@ Set the location for agenda files:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; org agenda files location
+  ;; org agenda location
   
   (setq org-agenda-files '("~/org/task.org"))
 #+end_src
@@ -336,6 +344,8 @@ A beautiful and accessible collection of themes by Prot Stavrou.
   ;; ef-themes
 
   ;;(use-package ef-themes :config (load-theme 'ef-light))
+  (setq ef-themes-region '(intense no-extend neutral))
+  (mapc #'disable-theme custom-enabled-themes)
 #+end_src
 
 *** ox-hugo
@@ -454,7 +464,7 @@ Provides rich descriptions next to minibuffer completions.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (global-set-key (kbd "C-q") nil)
   ;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
-  (global-set-key (kbd "M-SPC") 'counsel-git)
+  (global-set-key (kbd "C-SPC") 'counsel-git)
   ;; (global-set-key (kbd "C-SPC") 'ibuffer-jump)
   (global-set-key (kbd "C-x b") nil)
 #+end_src
@@ -678,7 +688,7 @@ A modal editor.
     (require 'meow)
     (meow-setup)
     (meow-global-mode 1)
-    (setq meow-expand-hint-remove-delay 2.0)
+    (setq meow-expand-hint-remove-delay 60.0)
     (meow-setup-indicator))
 #+end_src
 
@@ -1112,7 +1122,7 @@ A client/Emacs interface for ripgrep:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (add-to-list 'load-path "~/.emacs.d/modus-themes")
   (require 'modus-themes)
-  (load-theme 'modus-operandi)
+  (load-theme 'ef-light)
 #+end_src
 
 *** focus
@@ -1176,7 +1186,7 @@ Frame management package by Prot
   (use-package beframe
       :init (beframe-mode))
 
-  (global-set-key (kbd "C-SPC") 'beframe-buffer-menu)
+  (global-set-key (kbd "S-SPC") 'beframe-buffer-menu)
 #+end_src
 
 *** electric-pair-mode
