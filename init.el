@@ -80,9 +80,9 @@
   (use-package mixed-pitch
   :hook
   (text-mode . mixed-pitch-mode))
-  (set-face-attribute 'default nil :font "Zed Mono-15")
-  (set-face-attribute 'fixed-pitch nil :font "Zed Mono-15")
-  (set-face-attribute 'variable-pitch nil :font "Zed Mono-15")
+  (set-face-attribute 'default nil :font "Berkeley Mono-15")
+  (set-face-attribute 'fixed-pitch nil :font "Berkeley Mono-15")
+  (set-face-attribute 'variable-pitch nil :font "Berkeley Mono-15")
 ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -139,7 +139,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; line numbers
 
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+;; (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; save place
@@ -184,11 +184,14 @@
     (require 'ox-hugo)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; magit
+  ;; magit
 
-(use-package magit
-    :config
-  (global-set-key (kbd "C-x m") (lambda () (interactive) (split-window-right) (other-window-prefix) (magit-status) (setq unread-command-events (listify-key-sequence "$")))))
+  (use-package magit
+      :config
+    (global-set-key (kbd "C-x m") (lambda () (interactive) (split-window-right) (other-window-prefix) (magit-status) (setq unread-command-events (listify-key-sequence "$")))))
+
+(with-eval-after-load 'magit-mode
+  (define-key magit-mode-map (kbd "<S-SPC>") nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; avy
@@ -712,7 +715,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/modus-themes")
 (require 'modus-themes)
-(load-theme 'ef-light)
+(load-theme 'modus-operandi)
 
 (use-package focus)
 
@@ -748,3 +751,5 @@
 (setq-default show-trailing-whitespace t)
 (setq-default indicate-empty-lines t)
 (setq-default indicate-buffer-boundaries 'left)
+(fringe-mode -1)
+(setq-default mode-line-format nil)
