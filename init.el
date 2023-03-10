@@ -75,13 +75,11 @@
 (setq mac-command-modifier 'meta)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- ;; font
+  ;; font
 
- (use-package mixed-pitch
- :hook
- (text-mode . mixed-pitch-mode))
-
-
+  (use-package mixed-pitch
+  :hook
+  (text-mode . mixed-pitch-mode))
   (set-face-attribute 'default nil :font "Zed Mono-15")
   (set-face-attribute 'fixed-pitch nil :font "Zed Mono-15")
   (set-face-attribute 'variable-pitch nil :font "Zed Mono-15")
@@ -746,3 +744,7 @@
 (global-set-key (kbd "S-SPC") 'beframe-buffer-menu)
 
 (electric-pair-mode)
+
+(setq-default show-trailing-whitespace t)
+(setq-default indicate-empty-lines t)
+(setq-default indicate-buffer-boundaries 'left)
